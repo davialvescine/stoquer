@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "722198576166",
+    "project_id": "stoquer-a6ad4",
+    "storage_bucket": "stoquer-a6ad4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722198576166:android:8c4f29fcdcf2d5f38cfae7",
+        "android_client_info": {
+          "package_name": "com.example.stoquer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg_OTapt-8_FbIalEE4fTsGVh71vhDBHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

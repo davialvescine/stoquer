@@ -141,7 +141,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         children: [
           // Formulário lateral
           Container(
-            width: 350,
+            width: 250,
             padding: const EdgeInsets.all(16),
             color: Colors.grey[100],
             child: Form(

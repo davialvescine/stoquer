@@ -40,14 +40,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         title: const Text('Dashboard'),
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.indigo),
-              child: Text('Stoquer Menu', style: TextStyle(color: Colors.white, fontSize: 24)),
-            ),
+
+      // Menu lateral
+
+            drawer: Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  const DrawerHeader(
+                    decoration: BoxDecoration(color: Colors.indigo),
+                    child: Text('Stoquer Menu', style: TextStyle(color: Colors.white, fontSize:24, )),
+                  ),
+            
+
             // === SEÇÃO PRINCIPAL ===
             ListTile(
               leading: const Icon(Icons.devices, color: Colors.indigo),
@@ -139,9 +144,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return GridView.count(
             crossAxisCount: 2,
             childAspectRatio: 1.1,
-            padding: const EdgeInsets.all(16.0),
-            crossAxisSpacing: 16,
-            mainAxisSpacing: 16,
+            padding: const EdgeInsets.all(12.0),
+            crossAxisSpacing: 6,
+            mainAxisSpacing: 6,
             children: [
               // === CARDS ORIGINAIS ===
               DashboardCard(

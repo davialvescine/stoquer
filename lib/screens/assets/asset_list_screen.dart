@@ -1,18 +1,19 @@
-/**
- * TELA DE LISTA DE ATIVOS
- * 
- * Exibe uma lista de ativos ou acessórios com funcionalidades avançadas
- * de busca, filtros, navegação e operações CRUD.
- * 
- * FUNCIONALIDADES PRINCIPAIS:
- * - Listagem dinâmica com StreamBuilder
- * - Busca por nome em tempo real
- * - Filtros por status, categoria e localização
- * - Swipe-to-delete com confirmação
- * - Navegação para detalhes e edição
- * - Estados vazios com call-to-action
- * - Interface adaptada para ativos e acessórios
- */
+/// @nodoc
+library;
+
+/// TELA DE LISTA DE ATIVOS
+/// 
+/// Exibe uma lista de ativos ou acessórios com funcionalidades avançadas
+/// de busca, filtros, navegação e operações CRUD.
+/// 
+/// FUNCIONALIDADES PRINCIPAIS:
+/// - Listagem dinâmica com StreamBuilder
+/// - Busca por nome em tempo real
+/// - Filtros por status, categoria e localização
+/// - Swipe-to-delete com confirmação
+/// - Navegação para detalhes e edição
+/// - Estados vazios com call-to-action
+/// - Interface adaptada para ativos e acessórios
 
 import 'package:flutter/material.dart';
 import '../../models/asset_model.dart';
@@ -22,12 +23,10 @@ import '../../services/firestore_service.dart';
 import 'add_edit_asset_screen.dart';
 import 'asset_details_screen.dart';
 
-/**
- * WIDGET PRINCIPAL: AssetListScreen
- * 
- * StatefulWidget que gerencia a listagem de ativos ou acessórios.
- * Suporta operações de busca, filtros e navegação.
- */
+/// WIDGET PRINCIPAL: AssetListScreen
+/// 
+/// StatefulWidget que gerencia a listagem de ativos ou acessórios.
+/// Suporta operações de busca, filtros e navegação.
 class AssetListScreen extends StatefulWidget {
   // Define se está mostrando acessórios (true) ou ativos (false)
   final bool isAcessorio;
@@ -38,12 +37,10 @@ class AssetListScreen extends StatefulWidget {
   State<AssetListScreen> createState() => _AssetListScreenState();
 }
 
-/**
- * ESTADO DA TELA: _AssetListScreenState
- * 
- * Gerencia todo o estado da tela de listagem de ativos.
- * Controla busca, filtros, dados e interações do usuário.
- */
+/// ESTADO DA TELA: _AssetListScreenState
+/// 
+/// Gerencia todo o estado da tela de listagem de ativos.
+/// Controla busca, filtros, dados e interações do usuário.
 class _AssetListScreenState extends State<AssetListScreen> {
   // === SERVIÇOS ===
   // Serviço para operações no Firestore
@@ -72,30 +69,26 @@ class _AssetListScreenState extends State<AssetListScreen> {
   // Lista de localizações disponíveis para filtro
   List<Location> _locations = [];
 
-  /**
-   * MÉTODO DO CICLO DE VIDA: initState
-   * 
-   * Inicializa a tela carregando dados necessários para os filtros.
-   * Executado uma vez quando o widget é criado.
-   */
+  /// MÉTODO DO CICLO DE VIDA: initState
+  /// 
+  /// Inicializa a tela carregando dados necessários para os filtros.
+  /// Executado uma vez quando o widget é criado.
   @override
   void initState() {
     super.initState();
     _loadFiltersData();
   }
 
-  /**
-   * MÉTODO: _loadFiltersData
-   * 
-   * Carrega categorias e localizações para popular os filtros.
-   * Executa requisições em paralelo para melhor performance.
-   * 
-   * PROCESSO:
-   * 1. Faz requisições paralelas para categorias e localizações
-   * 2. Aguarda ambas completarem usando Future.wait
-   * 3. Atualiza estado com os dados recebidos
-   * 4. Trata erros sem interromper a aplicação
-   */
+  /// MÉTODO: _loadFiltersData
+  /// 
+  /// Carrega categorias e localizações para popular os filtros.
+  /// Executa requisições em paralelo para melhor performance.
+  /// 
+  /// PROCESSO:
+  /// 1. Faz requisições paralelas para categorias e localizações
+  /// 2. Aguarda ambas completarem usando Future.wait
+  /// 3. Atualiza estado com os dados recebidos
+  /// 4. Trata erros sem interromper a aplicação
   Future<void> _loadFiltersData() async {
     try {
       // Prepara requisições em paralelo
@@ -117,25 +110,23 @@ class _AssetListScreenState extends State<AssetListScreen> {
     }
   }
 
-  /**
-   * MÉTODO: _filterAssets
-   * 
-   * Aplica todos os filtros ativos na lista de ativos.
-   * Combina filtros de tipo, busca, status, categoria e localização.
-   * 
-   * PARÂMETROS:
-   * - assets: Lista completa de ativos do Firestore
-   * 
-   * RETORNO:
-   * - List<Asset>: Lista filtrada conforme critérios selecionados
-   * 
-   * FILTROS APLICADOS:
-   * 1. Tipo: mostra apenas ativos ou acessórios
-   * 2. Busca: nome contém o texto digitado
-   * 3. Status: corresponde ao status selecionado
-   * 4. Categoria: corresponde à categoria selecionada
-   * 5. Localização: corresponde à localização selecionada
-   */
+  /// MÉTODO: _filterAssets
+  /// 
+  /// Aplica todos os filtros ativos na lista de ativos.
+  /// Combina filtros de tipo, busca, status, categoria e localização.
+  /// 
+  /// PARÂMETROS:
+  /// - assets: Lista completa de ativos do Firestore
+  /// 
+  /// RETORNO:
+  /// - List\<Asset\>: Lista filtrada conforme critérios selecionados
+  /// 
+  /// FILTROS APLICADOS:
+  /// 1. Tipo: mostra apenas ativos ou acessórios
+  /// 2. Busca: nome contém o texto digitado
+  /// 3. Status: corresponde ao status selecionado
+  /// 4. Categoria: corresponde à categoria selecionada
+  /// 5. Localização: corresponde à localização selecionada
   List<Asset> _filterAssets(List<Asset> assets) {
     return assets.where((asset) {
       // 1. Filtro por tipo (ativo/acessório) - sempre aplicado
@@ -168,20 +159,18 @@ class _AssetListScreenState extends State<AssetListScreen> {
     }).toList();
   }
 
-  /**
-   * MÉTODO: _showFilterDialog
-   * 
-   * Exibe um modal bottom sheet com opções de filtro avançado.
-   * Permite filtrar por status, categoria e localização.
-   * 
-   * CARACTERÍSTICAS:
-   * - Modal com bordas arredondadas no topo
-   * - StatefulBuilder para estado independente do modal
-   * - Chips para seleção de status
-   * - Dropdowns para categoria e localização
-   * - Botão para limpar todos os filtros
-   * - Atualizações em tempo real na tela principal
-   */
+  /// MÉTODO: _showFilterDialog
+  /// 
+  /// Exibe um modal bottom sheet com opções de filtro avançado.
+  /// Permite filtrar por status, categoria e localização.
+  /// 
+  /// CARACTERÍSTICAS:
+  /// - Modal com bordas arredondadas no topo
+  /// - StatefulBuilder para estado independente do modal
+  /// - Chips para seleção de status
+  /// - Dropdowns para categoria e localização
+  /// - Botão para limpar todos os filtros
+  /// - Atualizações em tempo real na tela principal
   void _showFilterDialog() {
     showModalBottomSheet(
       context: context,
@@ -297,26 +286,24 @@ class _AssetListScreenState extends State<AssetListScreen> {
     );
   }
 
-  /**
-   * MÉTODO: _deleteAsset
-   * 
-   * Exibe dialog de confirmação e executa exclusão do ativo.
-   * Implementa padrão seguro para operações destrutivas.
-   * 
-   * PARÂMETROS:
-   * - asset: Ativo a ser excluído
-   * 
-   * PROCESSO:
-   * 1. Exibe AlertDialog para confirmação
-   * 2. Se confirmado, executa exclusão no Firestore
-   * 3. Exibe feedback de sucesso ou erro
-   * 4. Lista é atualizada automaticamente via StreamBuilder
-   * 
-   * SEGURANÇA:
-   * - Confirmação obrigatória antes da exclusão
-   * - Verificação de estado 'mounted' antes de atualizações
-   * - Tratamento de erros com mensagens informativas
-   */
+  /// MÉTODO: _deleteAsset
+  /// 
+  /// Exibe dialog de confirmação e executa exclusão do ativo.
+  /// Implementa padrão seguro para operações destrutivas.
+  /// 
+  /// PARÂMETROS:
+  /// - asset: Ativo a ser excluído
+  /// 
+  /// PROCESSO:
+  /// 1. Exibe AlertDialog para confirmação
+  /// 2. Se confirmado, executa exclusão no Firestore
+  /// 3. Exibe feedback de sucesso ou erro
+  /// 4. Lista é atualizada automaticamente via StreamBuilder
+  /// 
+  /// SEGURANÇA:
+  /// - Confirmação obrigatória antes da exclusão
+  /// - Verificação de estado 'mounted' antes de atualizações
+  /// - Tratamento de erros com mensagens informativas
   Future<void> _deleteAsset(Asset asset) async {
     // Exibe dialog de confirmação
     final confirm = await showDialog<bool>(
@@ -363,25 +350,23 @@ class _AssetListScreenState extends State<AssetListScreen> {
     }
   }
 
-  /**
-   * MÉTODO: build
-   * 
-   * Constrói a interface da tela de lista de ativos.
-   * Implementa busca em tempo real, filtros e lista dinâmica.
-   * 
-   * ESTRUTURA DA INTERFACE:
-   * 1. AppBar com título dinâmico e botão de filtros
-   * 2. Barra de busca com campo de texto
-   * 3. Lista principal com StreamBuilder
-   * 4. Estados vazios informativos
-   * 5. FloatingActionButton para adicionar novos
-   * 
-   * CARACTERÍSTICAS:
-   * - Dados em tempo real via Stream
-   * - Filtros aplicados automaticamente
-   * - Swipe-to-delete nos items
-   * - Navegação para detalhes e edição
-   */
+  /// MÉTODO: build
+  /// 
+  /// Constrói a interface da tela de lista de ativos.
+  /// Implementa busca em tempo real, filtros e lista dinâmica.
+  /// 
+  /// ESTRUTURA DA INTERFACE:
+  /// 1. AppBar com título dinâmico e botão de filtros
+  /// 2. Barra de busca com campo de texto
+  /// 3. Lista principal com StreamBuilder
+  /// 4. Estados vazios informativos
+  /// 5. FloatingActionButton para adicionar novos
+  /// 
+  /// CARACTERÍSTICAS:
+  /// - Dados em tempo real via Stream
+  /// - Filtros aplicados automaticamente
+  /// - Swipe-to-delete nos items
+  /// - Navegação para detalhes e edição
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -552,7 +537,7 @@ class _AssetListScreenState extends State<AssetListScreen> {
                                         ? Image.network(
                                             asset.fotoPrincipal!,
                                             fit: BoxFit.cover,
-                                            errorBuilder: (_, __, ___) => Icon(
+                                            errorBuilder: (context, error, stackTrace) => Icon(
                                               widget.isAcessorio 
                                                   ? Icons.extension 
                                                   : Icons.devices,
@@ -671,17 +656,15 @@ class _AssetListScreenState extends State<AssetListScreen> {
     );
   }
 
-  /**
-   * MÉTODO HELPER: _getStatusColor
-   * 
-   * Retorna a cor apropriada para cada status do ativo.
-   * Usado para colorir os badges de status na lista.
-   * 
-   * CORES:
-   * - Disponível: Verde (disponível para uso)
-   * - Emprestado: Laranja (temporariamente fora)
-   * - Em Uso: Azul (sendo usado atualmente)
-   */
+  /// MÉTODO HELPER: _getStatusColor
+  /// 
+  /// Retorna a cor apropriada para cada status do ativo.
+  /// Usado para colorir os badges de status na lista.
+  /// 
+  /// CORES:
+  /// - Disponível: Verde (disponível para uso)
+  /// - Emprestado: Laranja (temporariamente fora)
+  /// - Em Uso: Azul (sendo usado atualmente)
   Color _getStatusColor(AssetStatus status) {
     switch (status) {
       case AssetStatus.disponivel:
@@ -693,12 +676,10 @@ class _AssetListScreenState extends State<AssetListScreen> {
     }
   }
 
-  /**
-   * MÉTODO HELPER: _getStatusDisplayName
-   * 
-   * Converte o enum AssetStatus para nome em português.
-   * Usado em filtros e exibições na interface.
-   */
+  /// MÉTODO HELPER: _getStatusDisplayName
+  /// 
+  /// Converte o enum AssetStatus para nome em português.
+  /// Usado em filtros e exibições na interface.
   String _getStatusDisplayName(AssetStatus status) {
     switch (status) {
       case AssetStatus.disponivel:
@@ -710,12 +691,10 @@ class _AssetListScreenState extends State<AssetListScreen> {
     }
   }
 
-  /**
-   * MÉTODO DO CICLO DE VIDA: dispose
-   * 
-   * Libera recursos quando o widget é removido.
-   * Previne vazamentos de memória.
-   */
+  /// MÉTODO DO CICLO DE VIDA: dispose
+  /// 
+  /// Libera recursos quando o widget é removido.
+  /// Previne vazamentos de memória.
   @override
   void dispose() {
     _searchController.dispose();

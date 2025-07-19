@@ -1,18 +1,19 @@
-/**
- * TELA DE ADICIONAR/EDITAR ATIVO
- * 
- * Esta tela permite criar novos ativos ou editar ativos existentes
- * no sistema de controle de estoque Stoquer.
- * 
- * FUNCIONALIDADES PRINCIPAIS:
- * - Criar novo ativo ou editar ativo existente
- * - Upload de múltiplas fotos (câmera ou galeria)
- * - Seleção de categoria e localização
- * - Anexar nota fiscal
- * - Definir data de compra
- * - Controlar status do ativo
- * - Validação completa dos dados
- */
+/// @nodoc
+library;
+
+/// TELA DE ADICIONAR/EDITAR ATIVO
+/// 
+/// Esta tela permite criar novos ativos ou editar ativos existentes
+/// no sistema de controle de estoque Stoquer.
+/// 
+/// FUNCIONALIDADES PRINCIPAIS:
+/// - Criar novo ativo ou editar ativo existente
+/// - Upload de múltiplas fotos (câmera ou galeria)
+/// - Seleção de categoria e localização
+/// - Anexar nota fiscal
+/// - Definir data de compra
+/// - Controlar status do ativo
+/// - Validação completa dos dados
 
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -25,12 +26,10 @@ import '../../services/storage_service.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textfield.dart';
 
-/**
- * WIDGET PRINCIPAL: AddEditAssetScreen
- * 
- * StatefulWidget que gerencia a tela de adicionar/editar ativos.
- * Pode operar em dois modos: criação (asset = null) ou edição (asset != null).
- */
+/// WIDGET PRINCIPAL: AddEditAssetScreen
+/// 
+/// StatefulWidget que gerencia a tela de adicionar/editar ativos.
+/// Pode operar em dois modos: criação (asset = null) ou edição (asset != null).
 class AddEditAssetScreen extends StatefulWidget {
   // Ativo a ser editado (null para criar novo)
   final Asset? asset;
@@ -38,13 +37,11 @@ class AddEditAssetScreen extends StatefulWidget {
   // Define se é um acessório (true) ou ativo principal (false)
   final bool isAcessorio;
 
-  /**
-   * CONSTRUTOR: AddEditAssetScreen
-   * 
-   * PARÂMETROS:
-   * - asset: Ativo a ser editado (opcional, null para criar novo)
-   * - isAcessorio: Se true, cria/edita acessório; se false, ativo principal
-   */
+  /// CONSTRUTOR: AddEditAssetScreen
+  /// 
+  /// PARÂMETROS:
+  /// - asset: Ativo a ser editado (opcional, null para criar novo)
+  /// - isAcessorio: Se true, cria/edita acessório; se false, ativo principal
   const AddEditAssetScreen({
     super.key,
     this.asset,
@@ -55,12 +52,10 @@ class AddEditAssetScreen extends StatefulWidget {
   State<AddEditAssetScreen> createState() => _AddEditAssetScreenState();
 }
 
-/**
- * ESTADO DA TELA: _AddEditAssetScreenState
- * 
- * Gerencia todo o estado da tela de adicionar/editar ativos.
- * Controla formulário, imagens, dados e interações do usuário.
- */
+/// ESTADO DA TELA: _AddEditAssetScreenState
+/// 
+/// Gerencia todo o estado da tela de adicionar/editar ativos.
+/// Controla formulário, imagens, dados e interações do usuário.
 class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
   // === CONTROLADORES DE FORMULÁRIO ===
   // Chave global para validação do formulário
@@ -116,16 +111,14 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
   // Indica se alguma operação está em andamento (loading)
   bool _isLoading = false;
 
-  /**
-   * MÉTODO DO CICLO DE VIDA: initState
-   * 
-   * Executado quando o widget é criado pela primeira vez.
-   * Inicializa os dados necessários para a tela.
-   * 
-   * AÇÕES REALIZADAS:
-   * - Carrega categorias e localizações do Firestore
-   * - Se editando ativo existente, popula os campos com os dados
-   */
+  /// MÉTODO DO CICLO DE VIDA: initState
+  /// 
+  /// Executado quando o widget é criado pela primeira vez.
+  /// Inicializa os dados necessários para a tela.
+  /// 
+  /// AÇÕES REALIZADAS:
+  /// - Carrega categorias e localizações do Firestore
+  /// - Se editando ativo existente, popula os campos com os dados
   @override
   void initState() {
     super.initState();
@@ -135,20 +128,18 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     }
   }
 
-  /**
-   * MÉTODO: _populateFields
-   * 
-   * Popula todos os campos do formulário com os dados do ativo existente.
-   * Usado apenas no modo de edição (quando widget.asset != null).
-   * 
-   * CAMPOS POPULADOS:
-   * - Título do ativo
-   * - Categoria e localização selecionadas
-   * - Status atual
-   * - Data de compra
-   * - URLs das imagens existentes
-   * - URL da nota fiscal existente
-   */
+  /// MÉTODO: _populateFields
+  /// 
+  /// Popula todos os campos do formulário com os dados do ativo existente.
+  /// Usado apenas no modo de edição (quando widget.asset != null).
+  /// 
+  /// CAMPOS POPULADOS:
+  /// - Título do ativo
+  /// - Categoria e localização selecionadas
+  /// - Status atual
+  /// - Data de compra
+  /// - URLs das imagens existentes
+  /// - URL da nota fiscal existente
   void _populateFields() {
     final asset = widget.asset!;
     
@@ -170,22 +161,20 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     _existingNotaFiscalUrl = asset.notaFiscalUrl;
   }
 
-  /**
-   * MÉTODO: _loadInitialData
-   * 
-   * Carrega dados iniciais necessários para a tela (categorias e localizações).
-   * Executa requisições ao Firestore de forma assíncrona e paralela.
-   * 
-   * PROCESSO:
-   * 1. Ativa indicador de loading
-   * 2. Executa requisições em paralelo usando Future.wait
-   * 3. Atualiza estado com os dados recebidos
-   * 4. Desativa loading e trata erros se necessário
-   * 
-   * TRATAMENTO DE ERROS:
-   * - Verifica se widget ainda está montado antes de atualizar estado
-   * - Exibe SnackBar com mensagem de erro se requisição falhar
-   */
+  /// MÉTODO: _loadInitialData
+  /// 
+  /// Carrega dados iniciais necessários para a tela (categorias e localizações).
+  /// Executa requisições ao Firestore de forma assíncrona e paralela.
+  /// 
+  /// PROCESSO:
+  /// 1. Ativa indicador de loading
+  /// 2. Executa requisições em paralelo usando Future.wait
+  /// 3. Atualiza estado com os dados recebidos
+  /// 4. Desativa loading e trata erros se necessário
+  /// 
+  /// TRATAMENTO DE ERROS:
+  /// - Verifica se widget ainda está montado antes de atualizar estado
+  /// - Exibe SnackBar com mensagem de erro se requisição falhar
   Future<void> _loadInitialData() async {
     // Ativa indicador de loading
     setState(() => _isLoading = true);
@@ -218,23 +207,21 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     }
   }
 
-  /**
-   * MÉTODO: _pickImages
-   * 
-   * Permite ao usuário selecionar múltiplas imagens da galeria.
-   * Aplica otimizações para reduzir tamanho dos arquivos.
-   * 
-   * CONFIGURAÇÕES DE OTIMIZAÇÃO:
-   * - Largura máxima: 1024px
-   * - Altura máxima: 1024px  
-   * - Qualidade: 85% (balanço entre qualidade e tamanho)
-   * 
-   * PROCESSO:
-   * 1. Abre galeria para seleção múltipla
-   * 2. Converte XFile para File
-   * 3. Adiciona à lista de imagens selecionadas
-   * 4. Atualiza interface com as novas imagens
-   */
+  /// MÉTODO: _pickImages
+  /// 
+  /// Permite ao usuário selecionar múltiplas imagens da galeria.
+  /// Aplica otimizações para reduzir tamanho dos arquivos.
+  /// 
+  /// CONFIGURAÇÕES DE OTIMIZAÇÃO:
+  /// - Largura máxima: 1024px
+  /// - Altura máxima: 1024px  
+  /// - Qualidade: 85% (balanço entre qualidade e tamanho)
+  /// 
+  /// PROCESSO:
+  /// 1. Abre galeria para seleção múltipla
+  /// 2. Converte XFile para File
+  /// 3. Adiciona à lista de imagens selecionadas
+  /// 4. Atualiza interface com as novas imagens
   Future<void> _pickImages() async {
     try {
       // Abre galeria para seleção múltipla com otimizações
@@ -261,24 +248,22 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     }
   }
 
-  /**
-   * MÉTODO: _takePhoto
-   * 
-   * Permite ao usuário tirar uma foto usando a câmera do dispositivo.
-   * Aplica as mesmas otimizações da seleção de galeria.
-   * 
-   * CONFIGURAÇÕES DE OTIMIZAÇÃO:
-   * - Fonte: Câmera do dispositivo
-   * - Largura máxima: 1024px
-   * - Altura máxima: 1024px
-   * - Qualidade: 85% (balanço entre qualidade e tamanho)
-   * 
-   * PROCESSO:
-   * 1. Abre câmera para captura
-   * 2. Se foto foi tirada, converte para File
-   * 3. Adiciona à lista de imagens selecionadas
-   * 4. Atualiza interface
-   */
+  /// MÉTODO: _takePhoto
+  /// 
+  /// Permite ao usuário tirar uma foto usando a câmera do dispositivo.
+  /// Aplica as mesmas otimizações da seleção de galeria.
+  /// 
+  /// CONFIGURAÇÕES DE OTIMIZAÇÃO:
+  /// - Fonte: Câmera do dispositivo
+  /// - Largura máxima: 1024px
+  /// - Altura máxima: 1024px
+  /// - Qualidade: 85% (balanço entre qualidade e tamanho)
+  /// 
+  /// PROCESSO:
+  /// 1. Abre câmera para captura
+  /// 2. Se foto foi tirada, converte para File
+  /// 3. Adiciona à lista de imagens selecionadas
+  /// 4. Atualiza interface
   Future<void> _takePhoto() async {
     try {
       // Abre câmera para captura com otimizações
@@ -306,24 +291,22 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     }
   }
 
-  /**
-   * MÉTODO: _pickNotaFiscal
-   * 
-   * Permite ao usuário selecionar uma imagem da nota fiscal da galeria.
-   * Aceita apenas uma imagem por vez (substitui a anterior se houver).
-   * 
-   * CONFIGURAÇÕES DE OTIMIZAÇÃO:
-   * - Fonte: Galeria do dispositivo
-   * - Largura máxima: 1024px
-   * - Altura máxima: 1024px
-   * - Qualidade: 85% (balanço entre qualidade e tamanho)
-   * 
-   * PROCESSO:
-   * 1. Abre galeria para seleção única
-   * 2. Se imagem foi selecionada, converte para File
-   * 3. Substitui nota fiscal anterior (se houver)
-   * 4. Atualiza interface
-   */
+  /// MÉTODO: _pickNotaFiscal
+  /// 
+  /// Permite ao usuário selecionar uma imagem da nota fiscal da galeria.
+  /// Aceita apenas uma imagem por vez (substitui a anterior se houver).
+  /// 
+  /// CONFIGURAÇÕES DE OTIMIZAÇÃO:
+  /// - Fonte: Galeria do dispositivo
+  /// - Largura máxima: 1024px
+  /// - Altura máxima: 1024px
+  /// - Qualidade: 85% (balanço entre qualidade e tamanho)
+  /// 
+  /// PROCESSO:
+  /// 1. Abre galeria para seleção única
+  /// 2. Se imagem foi selecionada, converte para File
+  /// 3. Substitui nota fiscal anterior (se houver)
+  /// 4. Atualiza interface
   Future<void> _pickNotaFiscal() async {
     try {
       // Abre galeria para seleção única com otimizações
@@ -351,23 +334,21 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     }
   }
 
-  /**
-   * MÉTODO: _selectDate
-   * 
-   * Abre um seletor de data para o usuário escolher a data de compra do ativo.
-   * Configurado para o formato brasileiro e com limites de data apropriados.
-   * 
-   * CONFIGURAÇÕES:
-   * - Data inicial: Data atual de compra ou hoje se não definida
-   * - Data mínima: 1º de janeiro de 2000
-   * - Data máxima: Hoje (não permite datas futuras)
-   * - Idioma: Português brasileiro
-   * 
-   * PROCESSO:
-   * 1. Abre dialog de seleção de data
-   * 2. Se usuário selecionou uma data, atualiza o estado
-   * 3. Interface é atualizada automaticamente
-   */
+  /// MÉTODO: _selectDate
+  /// 
+  /// Abre um seletor de data para o usuário escolher a data de compra do ativo.
+  /// Configurado para o formato brasileiro e com limites de data apropriados.
+  /// 
+  /// CONFIGURAÇÕES:
+  /// - Data inicial: Data atual de compra ou hoje se não definida
+  /// - Data mínima: 1º de janeiro de 2000
+  /// - Data máxima: Hoje (não permite datas futuras)
+  /// - Idioma: Português brasileiro
+  /// 
+  /// PROCESSO:
+  /// 1. Abre dialog de seleção de data
+  /// 2. Se usuário selecionou uma data, atualiza o estado
+  /// 3. Interface é atualizada automaticamente
   Future<void> _selectDate() async {
     // Abre seletor de data com configurações em português
     final DateTime? picked = await showDatePicker(
@@ -386,72 +367,66 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     }
   }
 
-  /**
-   * MÉTODO: _removeNewImage
-   * 
-   * Remove uma imagem recém-selecionada da lista de imagens.
-   * Usado para imagens que ainda não foram enviadas ao servidor.
-   * 
-   * PARÂMETROS:
-   * - index: Índice da imagem na lista _selectedImages
-   * 
-   * PROCESSO:
-   * - Remove da lista local de arquivos
-   * - Interface é atualizada automaticamente
-   */
+  /// MÉTODO: _removeNewImage
+  /// 
+  /// Remove uma imagem recém-selecionada da lista de imagens.
+  /// Usado para imagens que ainda não foram enviadas ao servidor.
+  /// 
+  /// PARÂMETROS:
+  /// - index: Índice da imagem na lista _selectedImages
+  /// 
+  /// PROCESSO:
+  /// - Remove da lista local de arquivos
+  /// - Interface é atualizada automaticamente
   void _removeNewImage(int index) {
     setState(() {
       _selectedImages.removeAt(index);
     });
   }
 
-  /**
-   * MÉTODO: _removeExistingImage
-   * 
-   * Remove uma imagem existente da lista de URLs.
-   * Usado para imagens que já estão no Firebase Storage.
-   * 
-   * PARÂMETROS:
-   * - url: URL da imagem a ser removida
-   * 
-   * PROCESSO:
-   * - Remove da lista de URLs existentes
-   * - Interface é atualizada automaticamente
-   * - Imagem será removida do Firebase ao salvar o ativo
-   */
+  /// MÉTODO: _removeExistingImage
+  /// 
+  /// Remove uma imagem existente da lista de URLs.
+  /// Usado para imagens que já estão no Firebase Storage.
+  /// 
+  /// PARÂMETROS:
+  /// - url: URL da imagem a ser removida
+  /// 
+  /// PROCESSO:
+  /// - Remove da lista de URLs existentes
+  /// - Interface é atualizada automaticamente
+  /// - Imagem será removida do Firebase ao salvar o ativo
   void _removeExistingImage(String url) {
     setState(() {
       _existingImageUrls.remove(url);
     });
   }
 
-  /**
-   * MÉTODO: _saveAsset
-   * 
-   * Método principal para salvar ou atualizar um ativo.
-   * Realiza validação completa, upload de arquivos e operações no banco.
-   * 
-   * PROCESSO DE VALIDAÇÃO:
-   * 1. Valida campos obrigatórios do formulário
-   * 2. Verifica se categoria foi selecionada
-   * 3. Verifica se localização foi selecionada
-   * 
-   * PROCESSO DE UPLOAD:
-   * 1. Faz upload das novas imagens selecionadas
-   * 2. Faz upload da nota fiscal (se houver nova)
-   * 3. Combina URLs existentes com novas
-   * 
-   * PROCESSO DE SALVAMENTO:
-   * 1. Cria objeto Asset com todos os dados
-   * 2. Decide entre criar novo ou atualizar existente
-   * 3. Salva no Firestore
-   * 4. Retorna à tela anterior com resultado
-   * 
-   * TRATAMENTO DE ERROS:
-   * - Exibe mensagens de validação
-   * - Trata erros de upload e salvamento
-   * - Mantém estado consistente em caso de falha
-   */
+  /// MÉTODO: _saveAsset
+  /// 
+  /// Método principal para salvar ou atualizar um ativo.
+  /// Realiza validação completa, upload de arquivos e operações no banco.
+  /// 
+  /// PROCESSO DE VALIDAÇÃO:
+  /// 1. Valida campos obrigatórios do formulário
+  /// 2. Verifica se categoria foi selecionada
+  /// 3. Verifica se localização foi selecionada
+  /// 
+  /// PROCESSO DE UPLOAD:
+  /// 1. Faz upload das novas imagens selecionadas
+  /// 2. Faz upload da nota fiscal (se houver nova)
+  /// 3. Combina URLs existentes com novas
+  /// 
+  /// PROCESSO DE SALVAMENTO:
+  /// 1. Cria objeto Asset com todos os dados
+  /// 2. Decide entre criar novo ou atualizar existente
+  /// 3. Salva no Firestore
+  /// 4. Retorna à tela anterior com resultado
+  /// 
+  /// TRATAMENTO DE ERROS:
+  /// - Exibe mensagens de validação
+  /// - Trata erros de upload e salvamento
+  /// - Mantém estado consistente em caso de falha
   Future<void> _saveAsset() async {
     // === VALIDAÇÃO DE CAMPOS OBRIGATÓRIOS ===
     // Valida todos os campos do formulário
@@ -541,25 +516,23 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     }
   }
 
-  /**
-   * MÉTODO: build
-   * 
-   * Constrói a interface da tela de adicionar/editar ativo.
-   * Exibe diferentes layouts baseados no estado (loading, formulário).
-   * 
-   * ESTRUTURA DA INTERFACE:
-   * 1. AppBar com título dinâmico
-   * 2. Loading indicator ou formulário principal
-   * 3. Seção de fotos com grid horizontal
-   * 4. Campos de formulário organizados
-   * 5. Seção de nota fiscal
-   * 6. Botão de salvar
-   * 
-   * RESPONSIVIDADE:
-   * - SingleChildScrollView para telas pequenas
-   * - Cards para organizar seções
-   * - Padding consistente
-   */
+  /// MÉTODO: build
+  /// 
+  /// Constrói a interface da tela de adicionar/editar ativo.
+  /// Exibe diferentes layouts baseados no estado (loading, formulário).
+  /// 
+  /// ESTRUTURA DA INTERFACE:
+  /// 1. AppBar com título dinâmico
+  /// 2. Loading indicator ou formulário principal
+  /// 3. Seção de fotos com grid horizontal
+  /// 4. Campos de formulário organizados
+  /// 5. Seção de nota fiscal
+  /// 6. Botão de salvar
+  /// 
+  /// RESPONSIVIDADE:
+  /// - SingleChildScrollView para telas pequenas
+  /// - Cards para organizar seções
+  /// - Padding consistente
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -834,24 +807,22 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     );
   }
 
-  /**
-   * WIDGET HELPER: _buildImageItem
-   * 
-   * Constrói um item de imagem para o grid horizontal de fotos.
-   * Pode exibir imagem da URL (existente) ou arquivo local (nova).
-   * 
-   * PARÂMETROS:
-   * - imageUrl: URL da imagem (para imagens existentes no Firebase)
-   * - imageFile: Arquivo local (para imagens recém-selecionadas)
-   * - onRemove: Callback para remover a imagem
-   * 
-   * CARACTERÍSTICAS:
-   * - Tamanho fixo (100x100)
-   * - Bordas arredondadas
-   * - Botão de remoção no canto superior direito
-   * - Tratamento de erro para imagens da web
-   * - Ajuste de imagem (cover) para manter proporção
-   */
+  /// WIDGET HELPER: _buildImageItem
+  /// 
+  /// Constrói um item de imagem para o grid horizontal de fotos.
+  /// Pode exibir imagem da URL (existente) ou arquivo local (nova).
+  /// 
+  /// PARÂMETROS:
+  /// - imageUrl: URL da imagem (para imagens existentes no Firebase)
+  /// - imageFile: Arquivo local (para imagens recém-selecionadas)
+  /// - onRemove: Callback para remover a imagem
+  /// 
+  /// CARACTERÍSTICAS:
+  /// - Tamanho fixo (100x100)
+  /// - Bordas arredondadas
+  /// - Botão de remoção no canto superior direito
+  /// - Tratamento de erro para imagens da web
+  /// - Ajuste de imagem (cover) para manter proporção
   Widget _buildImageItem({
     String? imageUrl,
     File? imageFile,
@@ -911,17 +882,15 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     );
   }
 
-  /**
-   * MÉTODO HELPER: _getStatusDisplayName
-   * 
-   * Converte o enum AssetStatus para nome em português para exibição.
-   * 
-   * PARÂMETROS:
-   * - status: Enum AssetStatus a ser convertido
-   * 
-   * RETORNO:
-   * - String: Nome do status em português
-   */
+  /// MÉTODO HELPER: _getStatusDisplayName
+  /// 
+  /// Converte o enum AssetStatus para nome em português para exibição.
+  /// 
+  /// PARÂMETROS:
+  /// - status: Enum AssetStatus a ser convertido
+  /// 
+  /// RETORNO:
+  /// - String: Nome do status em português
   String _getStatusDisplayName(AssetStatus status) {
     switch (status) {
       case AssetStatus.disponivel:
@@ -933,16 +902,14 @@ class _AddEditAssetScreenState extends State<AddEditAssetScreen> {
     }
   }
 
-  /**
-   * MÉTODO DO CICLO DE VIDA: dispose
-   * 
-   * Libera recursos quando o widget é removido da árvore.
-   * Essencial para evitar vazamentos de memória.
-   * 
-   * RECURSOS LIBERADOS:
-   * - TextEditingController do título
-   * - Outros recursos do widget pai
-   */
+  /// MÉTODO DO CICLO DE VIDA: dispose
+  /// 
+  /// Libera recursos quando o widget é removido da árvore.
+  /// Essencial para evitar vazamentos de memória.
+  /// 
+  /// RECURSOS LIBERADOS:
+  /// - TextEditingController do título
+  /// - Outros recursos do widget pai
   @override
   void dispose() {
     _tituloController.dispose();

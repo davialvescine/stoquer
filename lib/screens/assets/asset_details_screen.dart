@@ -1,19 +1,20 @@
-/**
- * TELA DE DETALHES DO ATIVO
- * 
- * Exibe informações completas de um ativo específico com funcionalidades avançadas
- * de visualização, edição e impressão de etiquetas.
- * 
- * FUNCIONALIDADES PRINCIPAIS:
- * - Carousel de imagens com navegação e zoom
- * - Visualização full-screen de imagens
- * - Informações completas do ativo organizadas em cards
- * - Geração e exibição de QR Code
- * - Impressão de etiqueta PDF com QR Code
- * - Edição e exclusão do ativo
- * - Atualização automática após edição
- * - Status colorido e informações de sistema
- */
+/// @nodoc
+library;
+
+/// TELA DE DETALHES DO ATIVO
+/// 
+/// Exibe informações completas de um ativo específico com funcionalidades avançadas
+/// de visualização, edição e impressão de etiquetas.
+/// 
+/// FUNCIONALIDADES PRINCIPAIS:
+/// - Carousel de imagens com navegação e zoom
+/// - Visualização full-screen de imagens
+/// - Informações completas do ativo organizadas em cards
+/// - Geração e exibição de QR Code
+/// - Impressão de etiqueta PDF com QR Code
+/// - Edição e exclusão do ativo
+/// - Atualização automática após edição
+/// - Status colorido e informações de sistema
 
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -27,12 +28,10 @@ import '../../models/location_model.dart';
 import '../../services/firestore_service.dart';
 import 'add_edit_asset_screen.dart';
 
-/**
- * WIDGET PRINCIPAL: AssetDetailsScreen
- * 
- * StatefulWidget que exibe detalhes completos de um ativo específico.
- * Permite visualização, edição e impressão de informações do ativo.
- */
+/// WIDGET PRINCIPAL: AssetDetailsScreen
+/// 
+/// StatefulWidget que exibe detalhes completos de um ativo específico.
+/// Permite visualização, edição e impressão de informações do ativo.
 class AssetDetailsScreen extends StatefulWidget {
   // Ativo a ser exibido (obrigatório)
   final Asset asset;
@@ -46,12 +45,10 @@ class AssetDetailsScreen extends StatefulWidget {
   State<AssetDetailsScreen> createState() => _AssetDetailsScreenState();
 }
 
-/**
- * ESTADO DA TELA: _AssetDetailsScreenState
- * 
- * Gerencia o estado da tela de detalhes do ativo.
- * Controla carousel de imagens, dados relacionados e operações CRUD.
- */
+/// ESTADO DA TELA: _AssetDetailsScreenState
+/// 
+/// Gerencia o estado da tela de detalhes do ativo.
+/// Controla carousel de imagens, dados relacionados e operações CRUD.
 class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
   // === SERVIÇOS ===
   // Serviço para operações no Firestore
@@ -74,12 +71,10 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
   // Versão atualizada do ativo (sincronizada após edições)
   Asset? _updatedAsset;
   
-  /**
-   * MÉTODO DO CICLO DE VIDA: initState
-   * 
-   * Inicializa a tela carregando dados relacionados e definindo o ativo atual.
-   * Executado uma vez quando o widget é criado.
-   */
+  /// MÉTODO DO CICLO DE VIDA: initState
+  /// 
+  /// Inicializa a tela carregando dados relacionados e definindo o ativo atual.
+  /// Executado uma vez quando o widget é criado.
   @override
   void initState() {
     super.initState();
@@ -87,23 +82,21 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
     _updatedAsset = widget.asset;
   }
 
-  /**
-   * MÉTODO: _loadRelatedData
-   * 
-   * Carrega dados relacionados ao ativo (categoria e localização).
-   * Busca informações no Firestore para exibir nomes ao invés de IDs.
-   * 
-   * PROCESSO:
-   * 1. Carrega listas de categorias e localizações
-   * 2. Busca a categoria específica pelo ID
-   * 3. Busca a localização específica pelo ID
-   * 4. Atualiza estado com os dados encontrados
-   * 5. Fornece valores padrão se não encontrar
-   * 
-   * TRATAMENTO DE ERROS:
-   * - Valores padrão para categoria e localização não encontradas
-   * - Verificação de estado mounted para evitar vazamentos
-   */
+  /// MÉTODO: _loadRelatedData
+  /// 
+  /// Carrega dados relacionados ao ativo (categoria e localização).
+  /// Busca informações no Firestore para exibir nomes ao invés de IDs.
+  /// 
+  /// PROCESSO:
+  /// 1. Carrega listas de categorias e localizações
+  /// 2. Busca a categoria específica pelo ID
+  /// 3. Busca a localização específica pelo ID
+  /// 4. Atualiza estado com os dados encontrados
+  /// 5. Fornece valores padrão se não encontrar
+  /// 
+  /// TRATAMENTO DE ERROS:
+  /// - Valores padrão para categoria e localização não encontradas
+  /// - Verificação de estado mounted para evitar vazamentos
   Future<void> _loadRelatedData() async {
     try {
       // Carrega listas de categorias e localizações
@@ -131,23 +124,21 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
     }
   }
 
-  /**
-   * MÉTODO: _deleteAsset
-   * 
-   * Exibe dialog de confirmação e executa exclusão do ativo.
-   * Após exclusão bem-sucedida, retorna à tela anterior.
-   * 
-   * PROCESSO:
-   * 1. Exibe AlertDialog com confirmação
-   * 2. Se confirmado, executa exclusão no Firestore
-   * 3. Navega de volta para tela anterior
-   * 4. Exibe feedback de sucesso ou erro
-   * 
-   * SEGURANÇA:
-   * - Confirmação obrigatória com aviso sobre irreversibilidade
-   * - Verificação de estado mounted antes de operações UI
-   * - Tratamento de erros com mensagens informativas
-   */
+  /// MÉTODO: _deleteAsset
+  /// 
+  /// Exibe dialog de confirmação e executa exclusão do ativo.
+  /// Após exclusão bem-sucedida, retorna à tela anterior.
+  /// 
+  /// PROCESSO:
+  /// 1. Exibe AlertDialog com confirmação
+  /// 2. Se confirmado, executa exclusão no Firestore
+  /// 3. Navega de volta para tela anterior
+  /// 4. Exibe feedback de sucesso ou erro
+  /// 
+  /// SEGURANÇA:
+  /// - Confirmação obrigatória com aviso sobre irreversibilidade
+  /// - Verificação de estado mounted antes de operações UI
+  /// - Tratamento de erros com mensagens informativas
   Future<void> _deleteAsset() async {
     // Exibe dialog de confirmação
     final confirm = await showDialog<bool>(
@@ -197,24 +188,22 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
     }
   }
 
-  /**
-   * MÉTODO: _editAsset
-   * 
-   * Navega para tela de edição e atualiza dados após retorno.
-   * Mantém a tela de detalhes sincronizada com alterações.
-   * 
-   * PROCESSO:
-   * 1. Navega para tela de edição passando o ativo atual
-   * 2. Aguarda resultado da edição
-   * 3. Se houve alteração, recarrega dados do Firestore
-   * 4. Atualiza estado com dados mais recentes
-   * 5. Recarrega dados relacionados (categoria/localização)
-   * 
-   * SINCRONIZAÇÃO:
-   * - Busca versão atualizada do ativo após edição
-   * - Atualiza interface com dados mais recentes
-   * - Recarrega dados relacionados para manter consistência
-   */
+  /// MÉTODO: _editAsset
+  /// 
+  /// Navega para tela de edição e atualiza dados após retorno.
+  /// Mantém a tela de detalhes sincronizada com alterações.
+  /// 
+  /// PROCESSO:
+  /// 1. Navega para tela de edição passando o ativo atual
+  /// 2. Aguarda resultado da edição
+  /// 3. Se houve alteração, recarrega dados do Firestore
+  /// 4. Atualiza estado com dados mais recentes
+  /// 5. Recarrega dados relacionados (categoria/localização)
+  /// 
+  /// SINCRONIZAÇÃO:
+  /// - Busca versão atualizada do ativo após edição
+  /// - Atualiza interface com dados mais recentes
+  /// - Recarrega dados relacionados para manter consistência
   Future<void> _editAsset() async {
     // Navega para tela de edição
     final result = await Navigator.push<bool>(
@@ -250,32 +239,30 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
     }
   }
 
-  /**
-   * MÉTODO: _printQrCode
-   * 
-   * Gera e exibe preview de impressão de etiqueta PDF com QR Code.
-   * Cria documento PDF com informações do ativo e QR Code para identificação.
-   * 
-   * PROCESSO:
-   * 1. Cria documento PDF vazio
-   * 2. Gera QR Code com ID do ativo
-   * 3. Converte QR Code para imagem
-   * 4. Cria página PDF com layout centralizado
-   * 5. Adiciona título, QR Code e informações do ativo
-   * 6. Exibe preview de impressão
-   * 
-   * CONTEÚDO DA ETIQUETA:
-   * - Título do ativo em destaque
-   * - QR Code grande (200x200) com ID do ativo
-   * - ID do ativo em texto
-   * - Categoria e localização
-   * - Status atual
-   * 
-   * TECNOLOGIAS:
-   * - qr_flutter: Geração do QR Code
-   * - pdf: Criação do documento PDF
-   * - printing: Interface de impressão
-   */
+  /// MÉTODO: _printQrCode
+  /// 
+  /// Gera e exibe preview de impressão de etiqueta PDF com QR Code.
+  /// Cria documento PDF com informações do ativo e QR Code para identificação.
+  /// 
+  /// PROCESSO:
+  /// 1. Cria documento PDF vazio
+  /// 2. Gera QR Code com ID do ativo
+  /// 3. Converte QR Code para imagem
+  /// 4. Cria página PDF com layout centralizado
+  /// 5. Adiciona título, QR Code e informações do ativo
+  /// 6. Exibe preview de impressão
+  /// 
+  /// CONTEÚDO DA ETIQUETA:
+  /// - Título do ativo em destaque
+  /// - QR Code grande (200x200) com ID do ativo
+  /// - ID do ativo em texto
+  /// - Categoria e localização
+  /// - Status atual
+  /// 
+  /// TECNOLOGIAS:
+  /// - qr_flutter: Geração do QR Code
+  /// - pdf: Criação do documento PDF
+  /// - printing: Interface de impressão
   Future<void> _printQrCode() async {
     final pdf = pw.Document();
     
@@ -338,21 +325,19 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
     );
   }
 
-  /**
-   * MÉTODO: _showFullScreenImage
-   * 
-   * Navega para visualizador de imagens em tela cheia.
-   * Permite visualização detalhada com zoom e navegação entre imagens.
-   * 
-   * PARÂMETROS:
-   * - initialIndex: Índice da imagem inicial a ser exibida
-   * 
-   * FUNCIONALIDADES:
-   * - Visualização em tela cheia
-   * - Zoom e pan (InteractiveViewer)
-   * - Navegação entre imagens com swipe
-   * - Fundo preto para melhor contraste
-   */
+  /// MÉTODO: _showFullScreenImage
+  /// 
+  /// Navega para visualizador de imagens em tela cheia.
+  /// Permite visualização detalhada com zoom e navegação entre imagens.
+  /// 
+  /// PARÂMETROS:
+  /// - initialIndex: Índice da imagem inicial a ser exibida
+  /// 
+  /// FUNCIONALIDADES:
+  /// - Visualização em tela cheia
+  /// - Zoom e pan (InteractiveViewer)
+  /// - Navegação entre imagens com swipe
+  /// - Fundo preto para melhor contraste
   void _showFullScreenImage(int initialIndex) {
     Navigator.push(
       context,
@@ -365,24 +350,22 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
     );
   }
 
-  /**
-   * MÉTODO: build
-   * 
-   * Constrói a interface da tela de detalhes do ativo.
-   * Exibe informações organizadas em seções com carousel de imagens.
-   * 
-   * ESTRUTURA DA INTERFACE:
-   * 1. AppBar com título e ações (editar/excluir)
-   * 2. Carousel de imagens com indicadores
-   * 3. Informações do ativo em cards organizados
-   * 4. QR Code com opção de impressão
-   * 
-   * CARACTERÍSTICAS:
-   * - Scroll vertical para conteúdo extenso
-   * - Carousel horizontal para múltiplas imagens
-   * - Cards para organizar informações
-   * - Estado vazio para ativos sem imagens
-   */
+  /// MÉTODO: build
+  /// 
+  /// Constrói a interface da tela de detalhes do ativo.
+  /// Exibe informações organizadas em seções com carousel de imagens.
+  /// 
+  /// ESTRUTURA DA INTERFACE:
+  /// 1. AppBar com título e ações (editar/excluir)
+  /// 2. Carousel de imagens com indicadores
+  /// 3. Informações do ativo em cards organizados
+  /// 4. QR Code com opção de impressão
+  /// 
+  /// CARACTERÍSTICAS:
+  /// - Scroll vertical para conteúdo extenso
+  /// - Carousel horizontal para múltiplas imagens
+  /// - Cards para organizar informações
+  /// - Estado vazio para ativos sem imagens
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -430,7 +413,7 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
                             child: Image.network(
                               _updatedAsset!.fotosUrls[index],
                               fit: BoxFit.contain,
-                              errorBuilder: (_, __, ___) => const Center(
+                              errorBuilder: (context, error, stackTrace) => const Center(
                                 child: Icon(
                                   Icons.broken_image,
                                   size: 64,
@@ -655,21 +638,19 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
     );
   }
 
-  /**
-   * WIDGET HELPER: _buildInfoCard
-   * 
-   * Constrói um card com título e lista de widgets filhos.
-   * Usado para organizar informações em seções visuais.
-   * 
-   * PARÂMETROS:
-   * - title: Título da seção
-   * - children: Lista de widgets a serem exibidos no card
-   * 
-   * CARACTERÍSTICAS:
-   * - Padding consistente
-   * - Título em destaque
-   * - Layout vertical para os filhos
-   */
+  /// WIDGET HELPER: _buildInfoCard
+  /// 
+  /// Constrói um card com título e lista de widgets filhos.
+  /// Usado para organizar informações em seções visuais.
+  /// 
+  /// PARÂMETROS:
+  /// - title: Título da seção
+  /// - children: Lista de widgets a serem exibidos no card
+  /// 
+  /// CARACTERÍSTICAS:
+  /// - Padding consistente
+  /// - Título em destaque
+  /// - Layout vertical para os filhos
   Widget _buildInfoCard({
     required String title,
     required List<Widget> children,
@@ -695,21 +676,19 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
     );
   }
 
-  /**
-   * WIDGET HELPER: _buildInfoRow
-   * 
-   * Constrói uma linha de informação com label e valor.
-   * Usado para exibir pares chave-valor de forma consistente.
-   * 
-   * PARÂMETROS:
-   * - label: Rótulo da informação (ex: "Categoria")
-   * - value: Valor da informação (ex: "Eletrônicos")
-   * 
-   * LAYOUT:
-   * - Label com largura fixa (120px)
-   * - Valor expandido ocupando espaço restante
-   * - Estilos diferentes para label e valor
-   */
+  /// WIDGET HELPER: _buildInfoRow
+  /// 
+  /// Constrói uma linha de informação com label e valor.
+  /// Usado para exibir pares chave-valor de forma consistente.
+  /// 
+  /// PARÂMETROS:
+  /// - label: Rótulo da informação (ex: "Categoria")
+  /// - value: Valor da informação (ex: "Eletrônicos")
+  /// 
+  /// LAYOUT:
+  /// - Label com largura fixa (120px)
+  /// - Valor expandido ocupando espaço restante
+  /// - Estilos diferentes para label e valor
   Widget _buildInfoRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
@@ -737,15 +716,13 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
     );
   }
 
-  /**
-   * MÉTODO HELPER: _formatDateTime
-   * 
-   * Formata DateTime para exibição em formato brasileiro.
-   * Inclui data e hora com zero à esquerda.
-   * 
-   * FORMATO: DD/MM/YYYY às HH:MM
-   * EXEMPLO: 15/07/2024 às 14:30
-   */
+  /// MÉTODO HELPER: _formatDateTime
+  /// 
+  /// Formata DateTime para exibição em formato brasileiro.
+  /// Inclui data e hora com zero à esquerda.
+  /// 
+  /// FORMATO: DD/MM/YYYY às HH:MM
+  /// EXEMPLO: 15/07/2024 às 14:30
   String _formatDateTime(DateTime dateTime) {
     return '${dateTime.day.toString().padLeft(2, '0')}/'
         '${dateTime.month.toString().padLeft(2, '0')}/'
@@ -754,17 +731,15 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
         '${dateTime.minute.toString().padLeft(2, '0')}';
   }
 
-  /**
-   * MÉTODO HELPER: _getStatusColor
-   * 
-   * Retorna a cor apropriada para cada status do ativo.
-   * Usado para colorir badges de status.
-   * 
-   * CORES:
-   * - Disponível: Verde
-   * - Emprestado: Laranja
-   * - Em Uso: Azul
-   */
+  /// MÉTODO HELPER: _getStatusColor
+  /// 
+  /// Retorna a cor apropriada para cada status do ativo.
+  /// Usado para colorir badges de status.
+  /// 
+  /// CORES:
+  /// - Disponível: Verde
+  /// - Emprestado: Laranja
+  /// - Em Uso: Azul
   Color _getStatusColor(AssetStatus status) {
     switch (status) {
       case AssetStatus.disponivel:
@@ -776,12 +751,10 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
     }
   }
 
-  /**
-   * MÉTODO DO CICLO DE VIDA: dispose
-   * 
-   * Libera recursos quando o widget é removido.
-   * Evita vazamentos de memória.
-   */
+  /// MÉTODO DO CICLO DE VIDA: dispose
+  /// 
+  /// Libera recursos quando o widget é removido.
+  /// Evita vazamentos de memória.
   @override
   void dispose() {
     _pageController.dispose();
@@ -789,20 +762,18 @@ class _AssetDetailsScreenState extends State<AssetDetailsScreen> {
   }
 }
 
-/**
- * WIDGET: _FullScreenImageViewer
- * 
- * Visualizador de imagens em tela cheia com funcionalidades avançadas.
- * Permite visualização detalhada com zoom, pan e navegação entre imagens.
- * 
- * FUNCIONALIDADES:
- * - Visualização em tela cheia com fundo preto
- * - Zoom e pan interativo (0.5x a 4.0x)
- * - Navegação entre imagens com swipe
- * - Página inicial configurável
- * - Tratamento de erro para imagens não carregadas
- * - AppBar transparente para controles mínimos
- */
+/// WIDGET: _FullScreenImageViewer
+/// 
+/// Visualizador de imagens em tela cheia com funcionalidades avançadas.
+/// Permite visualização detalhada com zoom, pan e navegação entre imagens.
+/// 
+/// FUNCIONALIDADES:
+/// - Visualização em tela cheia com fundo preto
+/// - Zoom e pan interativo (0.5x a 4.0x)
+/// - Navegação entre imagens com swipe
+/// - Página inicial configurável
+/// - Tratamento de erro para imagens não carregadas
+/// - AppBar transparente para controles mínimos
 class _FullScreenImageViewer extends StatelessWidget {
   // Lista de URLs das imagens a serem exibidas
   final List<String> images;
@@ -842,7 +813,7 @@ class _FullScreenImageViewer extends StatelessWidget {
                 images[index],
                 fit: BoxFit.contain,
                 // Tratamento de erro para imagens não carregadas
-                errorBuilder: (_, __, ___) => const Center(
+                errorBuilder: (context, error, stackTrace) => const Center(
                   child: Icon(
                     Icons.broken_image,
                     size: 64,

@@ -1,6 +1,6 @@
 # stoquer
 <<<<<<< HEAD
-App de Stoque
+App de Estoque
 =======
 
 A new Flutter project.

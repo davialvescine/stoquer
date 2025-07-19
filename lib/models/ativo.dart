@@ -1,4 +1,3 @@
-// models/ativo.dart
 class Ativo {
   final String id;
   final String codigo;
@@ -30,7 +29,6 @@ class Ativo {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'codigo': codigo,
       'nome': nome,
       'categoria': categoria,
@@ -45,19 +43,19 @@ class Ativo {
     };
   }
 
-  factory Ativo.fromMap(Map<String, dynamic> map) {
+  factory Ativo.fromMap(String id, Map<String, dynamic> map) {
     return Ativo(
-      id: map['id'] ?? '',
+      id: id,
       codigo: map['codigo'] ?? '',
       nome: map['nome'] ?? '',
       categoria: map['categoria'] ?? '',
       descricao: map['descricao'] ?? '',
       disponivel: map['disponivel'] ?? true,
       emprestimoAtualId: map['emprestimoAtualId'],
-      dataCadastro: DateTime.parse(map['dataCadastro']),
+      dataCadastro: map['dataCadastro'] != null ? DateTime.parse(map['dataCadastro']) : DateTime.now(),
       localizacao: map['localizacao'],
       numeroSerie: map['numeroSerie'],
-      valorEstimado: map['valorEstimado']?.toDouble(),
+      valorEstimado: (map['valorEstimado'] as num?)?.toDouble(),
       condicao: map['condicao'],
     );
   }

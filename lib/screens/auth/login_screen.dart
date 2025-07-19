@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../services/auth_service.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_textfield.dart';
-import 'register_screen.dart';
+import 'package:stoquer/services/auth_service.dart';
+// Remova os comentários das linhas abaixo quando criar as respectivas telas.
+// import 'package:stoquer/screens/auth/register_screen.dart';
+// import 'package:stoquer/screens/auth/password_reset_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,97 +12,21 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
+  // Chave para identificar e validar o formulário
+  final _formKey = GlobalKey<FormState>();
+
+  // Controladores para capturar o texto dos campos
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  // Instância do nosso serviço de autenticação
+  final _authService = AuthService();
+
+  // Variáveis de estado da UI
   bool _isLoading = false;
-  bool _isPasswordObscured = true;
+  bool _isPasswordVisible = false;
 
-  bool _isValidEmail(String email) {
-    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
-  }
-
-  void _login() async {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-    
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor, preencha todos os campos')),
-      );
-      return;
-    }
-
-    if (!_isValidEmail(email)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor, insira um email válido')),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-    try {
-      String? res = await _authService.loginUser(email: email, password: password);
-      
-      if (mounted) {
-        setState(() => _isLoading = false);
-        
-        if (res != 'success') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(res ?? 'Erro desconhecido')),
-          );
-        } else {
-          Navigator.of(context).popUntil((route) => route.isFirst);
-        }
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erro inesperado durante o login')),
-        );
-      }
-    }
-  }
-
-  void _resetPassword() async {
-    final email = _emailController.text.trim();
-    
-    if (email.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor, insira o seu e-mail para redefinir a senha.')),
-      );
-      return;
-    }
-
-    if (!_isValidEmail(email)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor, insira um email válido')),
-      );
-      return;
-    }
-
-    setState(() => _isLoading = true);
-    try {
-      String? res = await _authService.resetPassword(email: email);
-      
-      if (mounted) {
-        setState(() => _isLoading = false);
-        String message = res == 'success'
-            ? 'E-mail de redefinição enviado! Verifique a sua caixa de entrada.'
-            : res ?? 'Ocorreu um erro.';
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
-      }
-    } catch (e) {
-      if (mounted) {
-        setState(() => _isLoading = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Erro inesperado ao enviar email de redefinição')),
-        );
-      }
-    }
-  }
-
+  // Limpa os controladores quando o widget é descartado para evitar vazamento de memória
   @override
   void dispose() {
     _emailController.dispose();
@@ -110,63 +34,186 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  // Função principal para lidar com o processo de login
+  Future<void> _login() async {
+    // 1. Valida o formulário. Se não for válido, a função para aqui.
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    // 2. Ativa o estado de carregamento e reconstrói a UI
+    setState(() {
+      _isLoading = true;
+    });
+
+    // 3. Chama o serviço de autenticação para fazer o login
+    final userCredential = await _authService.signInWithEmail(
+      _emailController.text.trim(),
+      _passwordController.text.trim(),
+    );
+
+    // 4. CORREÇÃO IMPORTANTE: Checa se o widget ainda está na tela antes de usar o context
+    if (!mounted) return;
+
+    // 5. Desativa o estado de carregamento
+    setState(() {
+      _isLoading = false;
+    });
+
+    // 6. Se o resultado for nulo, significa que houve um erro. Mostra a mensagem.
+    if (userCredential == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('E-mail ou senha inválidos. Tente novamente.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+    // Se o login for bem-sucedido, o AuthWrapper cuidará automaticamente da navegação
+    // para a tela principal, então não precisamos fazer nada aqui.
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0, iconTheme: const IconThemeData(color: Colors.black)),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 48.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text('Login', textAlign: TextAlign.center, style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Color(0xFF3F51B5))),
-              const SizedBox(height: 12),
-              const Text('Bem-vindo de volta!\nSentimos sua falta!', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Colors.black54)),
-              const SizedBox(height: 48),
-              CustomTextField(controller: _emailController, hintText: 'Email'),
-              const SizedBox(height: 16),
-              CustomTextField(
-                controller: _passwordController,
-                hintText: 'Senha',
-                obscureText: _isPasswordObscured,
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _isPasswordObscured ? Icons.visibility_off : Icons.visibility,
-                    color: Colors.grey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 48.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // --- Título e Subtítulo ---
+                  Text(
+                    'Bem-vindo de volta!',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      _isPasswordObscured = !_isPasswordObscured;
-                    });
-                  },
-                ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Faça login para gerenciar seus ativos.',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          color: Colors.grey.shade600,
+                        ),
+                  ),
+                  const SizedBox(height: 48),
+
+                  // --- Campo de E-mail ---
+                  TextFormField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      labelText: 'E-mail',
+                      hintText: 'seuemail@exemplo.com',
+                      prefixIcon: Icon(Icons.email_outlined),
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Por favor, insira seu e-mail.';
+                      }
+                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                        return 'Por favor, insira um e-mail válido.';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  // --- Campo de Senha ---
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: !_isPasswordVisible,
+                    decoration: InputDecoration(
+                      labelText: 'Senha',
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      border: const OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isPasswordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isPasswordVisible = !_isPasswordVisible;
+                          });
+                        },
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Por favor, insira sua senha.';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 8),
+
+                  // --- Botão de Esqueci a Senha ---
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () {
+                        // Navegar para a tela de recuperação de senha
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) => const PasswordResetScreen()));
+                         ScaffoldMessenger.of(context).showSnackBar(
+                           const SnackBar(content: Text('Tela de recuperação de senha em construção.'))
+                         );
+                      },
+                      child: const Text('Esqueceu a senha?'),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // --- Botão de Login ---
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: _isLoading ? null : _login, // Desabilita o botão durante o loading
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 24,
+                            width: 24,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 3,
+                            ),
+                          )
+                        : const Text('Entrar', style: TextStyle(fontSize: 16)),
+                  ),
+                  const SizedBox(height: 32),
+
+                  // --- Link para Tela de Registro ---
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Não tem uma conta?"),
+                      TextButton(
+                        onPressed: () {
+                          // Navegar para a tela de registro
+                          // Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen()));
+                           ScaffoldMessenger.of(context).showSnackBar(
+                           const SnackBar(content: Text('Tela de registro em construção.'))
+                         );
+                        },
+                        child: const Text('Cadastre-se'),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: _resetPassword,
-                  child: const Text('Redefinir senha'),
-                ),
-              ),
-              const SizedBox(height: 12),
-              _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : CustomElevatedButton(text: 'Entrar', onPressed: _login),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const RegisterScreen()),
-                  );
-                },
-                child: const Text(
-                  'Criar uma conta',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),

@@ -676,7 +676,7 @@ class _MovementsScreenState extends State<MovementsScreen> {
                       ),
                     ),
                     if (isLate)
-                      Text(
+                      const Text(
                         'ATRASADO',
                         style: TextStyle(
                           color: Colors.red,

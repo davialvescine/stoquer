@@ -336,7 +336,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
       final pdf = pw.Document();
       
       // Dividir ativos em grupos de 6 por página (2 colunas x 3 linhas)
-      final itemsPerPage = 6;
+      const itemsPerPage = 6;
       for (int i = 0; i < assets.length; i += itemsPerPage) {
         final pageAssets = assets.skip(i).take(itemsPerPage).toList();
         
@@ -380,7 +380,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                             ),
                             pw.Text(
                               'ID: ${asset.id}',
-                              style: pw.TextStyle(fontSize: 8, color: PdfColors.grey),
+                              style: const pw.TextStyle(fontSize: 8, color: PdfColors.grey),
                             ),
                           ],
                         ),
@@ -720,7 +720,7 @@ class _QRCodeScreenState extends State<QRCodeScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text('Total de ativos: ${assets.length}'),
-                  Text('QR Codes por página: 6'),
+                  const Text('QR Codes por página: 6'),
                   Text('Páginas necessárias: ${(assets.length / 6).ceil()}'),
                 ],
               ),

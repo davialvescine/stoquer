@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stoquer/models/emprestimo.dart';
 import 'package:stoquer/services/historico_service.dart';
 
+
 class EmprestimoService {
   final CollectionReference _emprestimos = FirebaseFirestore.instance.collection('emprestimos');
   final CollectionReference _ativos = FirebaseFirestore.instance.collection('ativos');

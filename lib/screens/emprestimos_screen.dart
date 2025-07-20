@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stoquer/models/emprestimo.dart';
 import 'package:stoquer/services/emprestimo_service.dart';
-import 'package:stoquer/widgets/devolucao_dialog.dart';
+import 'package:stoquer/widgets/devolucao_dialog.dart'; // se for usado dentro de _mostrarDialogoDevolucao
+
+
 
 class EmprestimosScreen extends StatefulWidget {
   const EmprestimosScreen({super.key});

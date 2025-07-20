@@ -1,13 +1,10 @@
 name: stoquer
 description: "A new Flutter project."
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  # O SDK está um pouco diferente do que eu tinha sugerido.
-  # Vamos manter a sua versão, mas garantir que seja compatível.
-  # Usar >=3.4.1 <4.0.0 é uma boa prática para abranger mais versões.
   sdk: '>=3.4.1 <4.0.0'
 
 dependencies:
@@ -15,19 +12,19 @@ dependencies:
     sdk: flutter
 
   # Firebase
-  firebase_core: ^3.15.1
-  firebase_auth: ^5.6.2
-  cloud_firestore: ^5.6.11
-  firebase_storage: ^12.0.1
-  
-  # State Management (Adicionado)
+  firebase_core: ^2.31.0
+  firebase_auth: ^4.19.5
+  cloud_firestore: ^4.17.3
+  firebase_storage: ^11.7.5
+
+  # State Management
   provider: ^6.1.5
 
   # Features
   qr_flutter: ^4.1.0
   mobile_scanner: ^7.0.1
   image_picker: ^1.1.2
-  fl_chart: ^1.0.0 # Note: Esta versão é bem antiga, considere atualizar.
+  fl_chart: ^1.0.0
 
   # PDF & Printing
   printing: ^5.12.0
@@ -36,7 +33,7 @@ dependencies:
   # Utilities
   logger: ^2.6.0
   uuid: ^4.5.1
-  intl: ^0.19.0 # Versão ajustada para maior compatibilidade.
+  intl: ^0.20.2
 
   # Icons
   cupertino_icons: ^1.0.8
@@ -44,15 +41,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0 # Versão ajustada para maior compatibilidade.
+
+  flutter_lints: ^3.0.0
+  dart_code_metrics: ^4.15.0   # ← Aqui! adicione o pacote
 
 flutter:
   uses-material-design: true
-
-  # assets:
-  #   - assets/images/
-  
-  # fonts:
-  #   - family: Inter
-  #     fonts:
-  #       - asset: assets/fonts/Inter-Regular.ttf

@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 // import '../services/emprestimo_service.dart';
 
 class RelatorioEmprestimosWidget extends StatefulWidget {
-  const RelatorioEmprestimosWidget({Key? key}) : super(key: key);
+  const RelatorioEmprestimosWidget({super.key});
 
   @override
   State<RelatorioEmprestimosWidget> createState() =>

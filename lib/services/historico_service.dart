@@ -25,7 +25,7 @@ class HistoricoService {
         'timestamp': FieldValue.serverTimestamp(),
       });
     } catch (e) {
-      print('Erro ao registrar ação no histórico: $e');
+      ('Erro ao registrar ação no histórico: $e');
     }
   }
 }

@@ -1,28 +1,24 @@
-/*
- * TELA DE GESTÃO DE CATEGORIAS
- * 
- * Esta tela permite o gerenciamento completo de categorias do sistema Stoquer.
- * Funcionalidades incluem cadastro, edição, personalização visual e controle de status.
- * 
- * FUNCIONALIDADES PRINCIPAIS:
- * - Cadastro de novas categorias com validação
- * - Seleção de cores personalizadas para categorias
- * - Controle de status ativo/inativo
- * - Listagem em tempo real com StreamBuilder
- * - Edição de status diretamente na lista
- * - Exclusão com confirmação
- * - Interface visual com cards coloridos
- */
+// TELA DE GESTÃO DE CATEGORIAS
+// 
+// Esta tela permite o gerenciamento completo de categorias do sistema Stoquer.
+// Funcionalidades incluem cadastro, edição, personalização visual e controle de status.
+// 
+// FUNCIONALIDADES PRINCIPAIS:
+// - Cadastro de novas categorias com validação
+// - Seleção de cores personalizadas para categorias
+// - Controle de status ativo/inativo
+// - Listagem em tempo real com StreamBuilder
+// - Edição de status diretamente na lista
+// - Exclusão com confirmação
+// - Interface visual com cards coloridos
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-/*
- * WIDGET PRINCIPAL: CategoriesScreen
- * 
- * StatefulWidget que gerencia toda a interface de categorias.
- * Utiliza layout com formulário lateral e lista principal.
- */
+/// WIDGET PRINCIPAL: CategoriesScreen
+/// 
+/// StatefulWidget que gerencia toda a interface de categorias.
+/// Utiliza layout com formulário lateral e lista principal.
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
 
@@ -30,12 +26,10 @@ class CategoriesScreen extends StatefulWidget {
   State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
 
-/*
- * ESTADO DA TELA: _CategoriesScreenState
- * 
- * Gerencia todo o estado da tela de gestão de categorias.
- * Controla formulário, cores, validações e interações.
- */
+/// ESTADO DA TELA: _CategoriesScreenState
+/// 
+/// Gerencia todo o estado da tela de gestão de categorias.
+/// Controla formulário, cores, validações e interações.
 class _CategoriesScreenState extends State<CategoriesScreen> {
   // === CONTROLADORES DE FORMULÁRIO ===
   // Chave global para validação do formulário
@@ -53,12 +47,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   // Status da categoria (ativa/inativa)
   bool _isActive = true;
 
-  /*
-   * MÉTODO DO CICLO DE VIDA: dispose
-   * 
-   * Libera recursos dos controladores para evitar vazamentos de memória.
-   * Executado quando o widget é removido da árvore de widgets.
-   */
+  /// MÉTODO DO CICLO DE VIDA: dispose
+  /// 
+  /// Libera recursos dos controladores para evitar vazamentos de memória.
+  /// Executado quando o widget é removido da árvore de widgets.
   @override
   void dispose() {
     _nameController.dispose();
@@ -67,17 +59,15 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     super.dispose();
   }
 
-  /*
-   * MÉTODO: _saveCategory
-   * 
-   * Salva uma nova categoria no Firestore após validação.
-   * Inclui cor personalizada e status de ativação.
-   * 
-   * VALIDAÇÕES:
-   * - Nome obrigatório e único
-   * - Cor válida selecionada
-   * - Descrição opcional
-   */
+  /// MÉTODO: _saveCategory
+  /// 
+  /// Salva uma nova categoria no Firestore após validação.
+  /// Inclui cor personalizada e status de ativação.
+  /// 
+  /// VALIDAÇÕES:
+  /// - Nome obrigatório e único
+  /// - Cor válida selecionada
+  /// - Descrição opcional
   Future<void> _saveCategory() async {
     if (_formKey.currentState!.validate()) {
       try {

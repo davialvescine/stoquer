@@ -27,7 +27,7 @@ class AtivoService {
       }
       return null;
     } catch (e) {
-      print('Erro ao buscar ativo: $e');
+      ('Erro ao buscar ativo: $e');
       return null;
     }
   }
@@ -43,7 +43,7 @@ class AtivoService {
       );
       return docRef.id;
     } catch (e) {
-      print('Erro ao criar ativo: $e');
+      ('Erro ao criar ativo: $e');
       return null;
     }
   }
@@ -58,7 +58,7 @@ class AtivoService {
         alvoDescricao: ativo.nome,
       );
     } catch (e) {
-      print('Erro ao atualizar ativo: $e');
+      ('Erro ao atualizar ativo: $e');
     }
   }
 
@@ -72,7 +72,7 @@ class AtivoService {
         alvoDescricao: nomeAtivo,
       );
     } catch (e) {
-      print('Erro ao excluir ativo: $e');
+      ('Erro ao excluir ativo: $e');
     }
   }
 }

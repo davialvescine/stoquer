@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart'; // Adicionado para usar debugPrint
 import 'package:stoquer/models/usuario_model.dart';
 
 class AuthService {
@@ -19,7 +20,10 @@ class AuthService {
   Future<UserCredential?> signInWithEmail(String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(email: email, password: password);
-    } catch (e) { return null; }
+    } catch (e) {
+      debugPrint("Erro ao fazer login: $e");
+      return null;
+    }
   }
 
   Future<UserCredential?> signUpWithEmail(String email, String password, String nome) async {
@@ -30,14 +34,25 @@ class AuthService {
         'nivelAcesso': 'usuario', 'dataCriacao': Timestamp.now(),
       });
       return uc;
-    } catch (e) { return null; }
+    } catch (e) {
+      debugPrint("Erro ao criar usuário: $e");
+      return null;
+    }
   }
 
   Future<void> signOut() async => await _auth.signOut();
   
-  Future<void> sendPasswordResetEmail(String email) async {
+  // SOLUÇÃO: Método `resetPassword` adicionado para ser chamado pela tela de perfil.
+  Future<String?> resetPassword({required String email}) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
-    } catch (e) { print("Erro ao resetar senha: $e"); }
+      return 'success';
+    } on FirebaseAuthException catch (e) {
+      debugPrint("Erro ao resetar senha: $e");
+      return e.message; // Retorna a mensagem de erro do Firebase
+    } catch (e) {
+      debugPrint("Erro desconhecido ao resetar senha: $e");
+      return 'Ocorreu um erro inesperado.';
+    }
   }
 }

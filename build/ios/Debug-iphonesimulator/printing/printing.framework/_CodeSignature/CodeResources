@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/printing-Swift.h</key>
 		<data>
-		MD9sla/zJCsSsd9/Qaul6x4Be6g=
+		R0vFKjVcxDzuz+4oMRSrb8uYJ9E=
 		</data>
 		<key>Headers/printing-umbrella.h</key>
 		<data>
@@ -22,11 +22,11 @@
 		</data>
 		<key>Modules/printing.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		B6y+Nj9edAYmMKJ6RCCiv6sxw2w=
+		FPaima4ewP+epgoYMs7ZjTL/pvw=
 		</data>
 		<key>Modules/printing.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<data>
-		86IVmV4EY3eD6pHKXloIWBCUxxA=
+		zNNBfuyzFwPQWLzjOfr1IhsBSYc=
 		</data>
 		<key>Modules/printing.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -38,7 +38,7 @@
 		</data>
 		<key>Modules/printing.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		6s0DsjU64u+I44cXcUmawLX6EDw=
+		viPOtHFwBScKgAEzOnUUy3z1wGU=
 		</data>
 		<key>Modules/printing.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/printing.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		HrPWh5shJlUl3Mga95EhG89pUdw=
+		nil2ByB03Sw6YTVJEjN+vs3hnzk=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -59,7 +59,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1GyXhLAimX/UCFAqB0+hYW1Rvu3v3gAJievLRJ+XySE=
+			mZ6h7N8g64rhg0y9WXGz46TvjRj+GRblMRloBglbFo0=
 			</data>
 		</dict>
 		<key>Headers/printing-umbrella.h</key>
@@ -80,14 +80,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Yc0staRAChj+ouC6zVnEoGYV8sjBLAPywz3DrL9vh3w=
+			iBBokW9x7lQ1w4Hgeh+Up3OSyGHWa6d5vr9H+7Ngz6s=
 			</data>
 		</dict>
 		<key>Modules/printing.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pQxm1nPjEjsHsaYs72xVMHZWdhIVvc+eTarceBjTc8A=
+			aa2GhgosjpHnZwuqTKDNILe1gOAJY1x3FRzSw/4d8Hw=
 			</data>
 		</dict>
 		<key>Modules/printing.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
@@ -108,7 +108,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			lN7STWPObpSwaIdwSB+X5Mh+W0ILe8FhAtaC4z2xDTU=
+			w3nzR02qvr7JmVQBHgz11ZmN18Zl/PqeUERGOvywoCw=
 			</data>
 		</dict>
 		<key>Modules/printing.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -129,7 +129,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fzzK3MkTMZWT4h/A/AncaevUJskBH9v4DqKYpO4V05w=
+			ikLjOHBvI1MJNd12jFhJpOyE7j3TtDtmaiOQZ4sJugo=
 			</data>
 		</dict>
 	</dict>

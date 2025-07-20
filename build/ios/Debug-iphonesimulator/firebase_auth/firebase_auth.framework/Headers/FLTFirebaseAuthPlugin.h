@@ -4,6 +4,7 @@
 
 #import <TargetConditionals.h>
 
+#import <Firebase/Firebase.h>
 #if TARGET_OS_OSX
 #import <FlutterMacOS/FlutterMacOS.h>
 #else
@@ -12,11 +13,7 @@
 
 #import <AuthenticationServices/AuthenticationServices.h>
 #import <Foundation/Foundation.h>
-#if __has_include(<firebase_core/FLTFirebasePlugin.h>)
 #import <firebase_core/FLTFirebasePlugin.h>
-#else
-#import <FLTFirebasePlugin.h>
-#endif
 #import "firebase_auth_messages.g.h"
 
 @interface FLTFirebaseAuthPlugin

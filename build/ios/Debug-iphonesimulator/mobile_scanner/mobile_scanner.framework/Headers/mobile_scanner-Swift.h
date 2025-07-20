@@ -309,21 +309,35 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
-@protocol FlutterPluginRegistrar;
-@class FlutterMethodCall;
 @class FlutterError;
+SWIFT_CLASS("_TtC14mobile_scanner14BarcodeHandler")
+@interface BarcodeHandler : NSObject <FlutterStreamHandler>
+- (FlutterError * _Nullable)onListenWithArguments:(id _Nullable)arguments eventSink:(FlutterEventSink _Nonnull)eventSink SWIFT_WARN_UNUSED_RESULT;
+- (FlutterError * _Nullable)onCancelWithArguments:(id _Nullable)arguments SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 @class AVCaptureOutput;
 @class AVCaptureConnection;
 @class NSString;
-SWIFT_CLASS("_TtC14mobile_scanner19MobileScannerPlugin")
-@interface MobileScannerPlugin : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, FlutterPlugin, FlutterStreamHandler, FlutterTexture>
-+ (void)registerWithRegistrar:(id <FlutterPluginRegistrar> _Nonnull)registrar;
-- (void)handleMethodCall:(FlutterMethodCall * _Nonnull)call result:(FlutterResult _Nonnull)result;
-- (FlutterError * _Nullable)onListenWithArguments:(id _Nullable)arguments eventSink:(FlutterEventSink _Nonnull)events SWIFT_WARN_UNUSED_RESULT;
-- (FlutterError * _Nullable)onCancelWithArguments:(id _Nullable)arguments SWIFT_WARN_UNUSED_RESULT;
-- (CVPixelBufferRef _Nullable __unsafe_unretained)copyPixelBuffer SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS("_TtC14mobile_scanner13MobileScanner")
+@interface MobileScanner : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, FlutterTexture>
+/// Gets called when a new image is added to the buffer
 - (void)captureOutput:(AVCaptureOutput * _Nonnull)output didOutputSampleBuffer:(CMSampleBufferRef _Nonnull)sampleBuffer fromConnection:(AVCaptureConnection * _Nonnull)connection;
 - (void)observeValueForKeyPath:(NSString * _Nullable)keyPath ofObject:(id _Nullable)object change:(NSDictionary<NSKeyValueChangeKey, id> * _Nullable)change context:(void * _Nullable)context;
+/// Sends output of OutputBuffer to a Flutter texture
+- (CVPixelBufferRef _Nullable __unsafe_unretained)copyPixelBuffer SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@protocol FlutterPluginRegistrar;
+@class FlutterMethodCall;
+SWIFT_CLASS("_TtC14mobile_scanner19MobileScannerPlugin")
+@interface MobileScannerPlugin : NSObject <FlutterPlugin>
++ (void)registerWithRegistrar:(id <FlutterPluginRegistrar> _Nonnull)registrar;
+- (void)handleMethodCall:(FlutterMethodCall * _Nonnull)call result:(FlutterResult _Nonnull)result;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end
@@ -647,21 +661,35 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
-@protocol FlutterPluginRegistrar;
-@class FlutterMethodCall;
 @class FlutterError;
+SWIFT_CLASS("_TtC14mobile_scanner14BarcodeHandler")
+@interface BarcodeHandler : NSObject <FlutterStreamHandler>
+- (FlutterError * _Nullable)onListenWithArguments:(id _Nullable)arguments eventSink:(FlutterEventSink _Nonnull)eventSink SWIFT_WARN_UNUSED_RESULT;
+- (FlutterError * _Nullable)onCancelWithArguments:(id _Nullable)arguments SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
 @class AVCaptureOutput;
 @class AVCaptureConnection;
 @class NSString;
-SWIFT_CLASS("_TtC14mobile_scanner19MobileScannerPlugin")
-@interface MobileScannerPlugin : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, FlutterPlugin, FlutterStreamHandler, FlutterTexture>
-+ (void)registerWithRegistrar:(id <FlutterPluginRegistrar> _Nonnull)registrar;
-- (void)handleMethodCall:(FlutterMethodCall * _Nonnull)call result:(FlutterResult _Nonnull)result;
-- (FlutterError * _Nullable)onListenWithArguments:(id _Nullable)arguments eventSink:(FlutterEventSink _Nonnull)events SWIFT_WARN_UNUSED_RESULT;
-- (FlutterError * _Nullable)onCancelWithArguments:(id _Nullable)arguments SWIFT_WARN_UNUSED_RESULT;
-- (CVPixelBufferRef _Nullable __unsafe_unretained)copyPixelBuffer SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS("_TtC14mobile_scanner13MobileScanner")
+@interface MobileScanner : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, FlutterTexture>
+/// Gets called when a new image is added to the buffer
 - (void)captureOutput:(AVCaptureOutput * _Nonnull)output didOutputSampleBuffer:(CMSampleBufferRef _Nonnull)sampleBuffer fromConnection:(AVCaptureConnection * _Nonnull)connection;
 - (void)observeValueForKeyPath:(NSString * _Nullable)keyPath ofObject:(id _Nullable)object change:(NSDictionary<NSKeyValueChangeKey, id> * _Nullable)change context:(void * _Nullable)context;
+/// Sends output of OutputBuffer to a Flutter texture
+- (CVPixelBufferRef _Nullable __unsafe_unretained)copyPixelBuffer SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init SWIFT_UNAVAILABLE;
++ (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
+@end
+
+@protocol FlutterPluginRegistrar;
+@class FlutterMethodCall;
+SWIFT_CLASS("_TtC14mobile_scanner19MobileScannerPlugin")
+@interface MobileScannerPlugin : NSObject <FlutterPlugin>
++ (void)registerWithRegistrar:(id <FlutterPluginRegistrar> _Nonnull)registrar;
+- (void)handleMethodCall:(FlutterMethodCall * _Nonnull)call result:(FlutterResult _Nonnull)result;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 + (nonnull instancetype)new SWIFT_UNAVAILABLE_MSG("-init is unavailable");
 @end

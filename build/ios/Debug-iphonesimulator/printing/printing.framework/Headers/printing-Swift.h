@@ -308,15 +308,8 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
-SWIFT_CLASS("_TtC8printing16CustomPrintPaper")
-@interface CustomPrintPaper : UIPrintPaper
-@property (nonatomic, readonly) CGSize paperSize;
-@property (nonatomic, readonly) CGRect printableRect;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
-@end
-
 @class UIPrintInteractionController;
+@class UIPrintPaper;
 SWIFT_CLASS("_TtC8printing8PrintJob")
 @interface PrintJob : UIPrintPageRenderer <UIPrintInteractionControllerDelegate>
 - (void)drawPageAtIndex:(NSInteger)pageIndex inRect:(CGRect)_;
@@ -658,15 +651,8 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 
 #if defined(__OBJC__)
 
-SWIFT_CLASS("_TtC8printing16CustomPrintPaper")
-@interface CustomPrintPaper : UIPrintPaper
-@property (nonatomic, readonly) CGSize paperSize;
-@property (nonatomic, readonly) CGRect printableRect;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
-@end
-
 @class UIPrintInteractionController;
+@class UIPrintPaper;
 SWIFT_CLASS("_TtC8printing8PrintJob")
 @interface PrintJob : UIPrintPageRenderer <UIPrintInteractionControllerDelegate>
 - (void)drawPageAtIndex:(NSInteger)pageIndex inRect:(CGRect)_;

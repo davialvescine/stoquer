@@ -1,36 +1,34 @@
-/*
- * TELA AVANÇADA DE QR CODE
- * 
- * Sistema completo de gestão de QR Codes para o Stoquer.
- * Esta é uma das funcionalidades mais avançadas do sistema.
- * 
- * FUNCIONALIDADES PRINCIPAIS:
- * === TAB SCANNER ===
- * - Scanner em tempo real com câmera
- * - Busca automática de ativos por QR Code
- * - Ações diretas: Emprestar/Devolver ativos
- * - Controles de flash e troca de câmera
- * - Histórico do último scan
- * 
- * === TAB GERAÇÃO ===
- * - Listação de todos os ativos
- * - Visualização expansivel de QR Codes
- * - Informações detalhadas dos ativos
- * - Impressão individual de QR Codes
- * 
- * === TAB IMPRESSÃO ===
- * - Impressão em massa de QR Codes
- * - Layout otimizado (6 QR Codes por página)
- * - Filtros por status (todos/disponíveis)
- * - Preview em grid dos QR Codes
- * - Export PDF profissional
- * 
- * INTEGRAÇÕES:
- * - Sistema de ativos completo
- * - Empréstimos/devoluções instantâneas
- * - Histórico de movimentações
- * - Relatórios PDF para impressão
- */
+// TELA AVANÇADA DE QR CODE
+// 
+// Sistema completo de gestão de QR Codes para o Stoquer.
+// Esta é uma das funcionalidades mais avançadas do sistema.
+// 
+// FUNCIONALIDADES PRINCIPAIS:
+// === TAB SCANNER ===
+// - Scanner em tempo real com câmera
+// - Busca automática de ativos por QR Code
+// - Ações diretas: Emprestar/Devolver ativos
+// - Controles de flash e troca de câmera
+// - Histórico do último scan
+// 
+// === TAB GERAÇÃO ===
+// - Listação de todos os ativos
+// - Visualização expansivel de QR Codes
+// - Informações detalhadas dos ativos
+// - Impressão individual de QR Codes
+// 
+// === TAB IMPRESSÃO ===
+// - Impressão em massa de QR Codes
+// - Layout otimizado (6 QR Codes por página)
+// - Filtros por status (todos/disponíveis)
+// - Preview em grid dos QR Codes
+// - Export PDF profissional
+// 
+// INTEGRAÇÕES:
+// - Sistema de ativos completo
+// - Empréstimos/devoluções instantâneas
+// - Histórico de movimentações
+// - Relatórios PDF para impressão
 
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -42,12 +40,10 @@ import 'package:printing/printing.dart';
 import 'package:intl/intl.dart';
 import '../../models/asset_model.dart';
 
-/*
- * WIDGET PRINCIPAL: QRCodeScreen
- * 
- * Tela com TabController para as 3 funcionalidades principais:
- * Scanner, Geração e Impressão de QR Codes.
- */
+/// WIDGET PRINCIPAL: QRCodeScreen
+/// 
+/// Tela com TabController para as 3 funcionalidades principais:
+/// Scanner, Geração e Impressão de QR Codes.
 class QRCodeScreen extends StatefulWidget {
   const QRCodeScreen({super.key});
 
@@ -55,12 +51,10 @@ class QRCodeScreen extends StatefulWidget {
   State<QRCodeScreen> createState() => _QRCodeScreenState();
 }
 
-/*
- * ESTADO DA TELA: _QRCodeScreenState
- * 
- * Gerencia todo o estado da tela de QR Code avançada.
- * Controla scanner, geração, impressão e integrações.
- */
+/// ESTADO DA TELA: _QRCodeScreenState
+/// 
+/// Gerencia todo o estado da tela de QR Code avançada.
+/// Controla scanner, geração, impressão e integrações.
 class _QRCodeScreenState extends State<QRCodeScreen> {
   // === CONTROLADORES DO SCANNER ===
   // Controlador da câmera do scanner

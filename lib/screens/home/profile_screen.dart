@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../services/auth_service.dart';
 import '../../widgets/custom_button.dart';
-// import 'package:logger/logger.dart'; // Use se quiser logar erros
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -13,29 +12,28 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final AuthService _authService = AuthService();
+  // currentUser é nullable, então o tratamento é necessário.
   final User? currentUser = FirebaseAuth.instance.currentUser;
-  // final Logger _logger = Logger(); // Use se quiser logar erros
 
   void _resetPassword() async {
+    // Garante que o email não é nulo antes de prosseguir.
     if (currentUser?.email == null) return;
 
-    String? res = await _authService.resetPassword(email: currentUser!.email!);
+    final res = await _authService.resetPassword(email: currentUser!.email!);
 
-    if (!mounted) return; // Protege contra uso incorreto do context
+    if (!mounted) return;
 
     final String message = res == 'success'
         ? 'E-mail de redefinição enviado! Verifique sua caixa de entrada.'
         : res ?? 'Ocorreu um erro.';
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
-
-    // _logger.i('Resultado da redefinição de senha: $message'); // Opcional
   }
 
   void _logout() async {
     await _authService.signOut();
 
-    if (!mounted) return; // Protege contra uso incorreto do context
+    if (!mounted) return;
 
     Navigator.of(context).popUntil((route) => route.isFirst);
   }
@@ -58,13 +56,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                currentUser?.email ?? 'E-mail não encontrado',
+                // SOLUÇÃO: Lógica ajustada para remover o aviso.
+                currentUser?.email ?? 'E-mail não disponível',
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
             const SizedBox(height: 32),
             CustomOutlinedButton(
               text: 'Redefinir Senha',
+              // A função _resetPassword já faz a verificação de nulo.
               onPressed: _resetPassword,
             ),
             const Spacer(),

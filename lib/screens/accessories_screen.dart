@@ -1,23 +1,23 @@
-//TELA DE GESTÃO DE ACESSÓRIOS
-
- //Esta tela permite o gerenciamento completo de acessórios do sistema Stoquer.
+// TELA DE GESTÃO DE ACESSÓRIOS
+//
+// Esta tela permite o gerenciamento completo de acessórios do sistema Stoquer.
 // Inclui funcionalidades de cadastro, edição, listagem e controle de estoque.
- // FUNCIONALIDADES PRINCIPAIS:
- // - Cadastro de novos acessórios com validação completa
- // - Listagem em tempo real com StreamBuilder
- // - Controle de quantidade e estoque mínimo
- // - Categorização e compatibilidade com ativos
- //- Marcação de itens consumíveis
- // - Operações de edição de quantidade
- // - Exclusão com confirmação
- // - Alertas de estoque baixo//
+// FUNCIONALIDADES PRINCIPAIS:
+// - Cadastro de novos acessórios com validação completa
+// - Listagem em tempo real com StreamBuilder
+// - Controle de quantidade e estoque mínimo
+// - Categorização e compatibilidade com ativos
+// - Marcação de itens consumíveis
+// - Operações de edição de quantidade
+// - Exclusão com confirmação
+// - Alertas de estoque baixo
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// WIDGET PRINCIPAL: AccessoriesScreen
-// StatefulWidget que gerencia toda a interface de acessórios.
- // Utiliza layout com formulário lateral e lista principal.
+/// WIDGET PRINCIPAL: AccessoriesScreen
+/// StatefulWidget que gerencia toda a interface de acessórios.
+/// Utiliza layout com formulário lateral e lista principal.
 
 class AccessoriesScreen extends StatefulWidget {
   const AccessoriesScreen({super.key});
@@ -26,9 +26,9 @@ class AccessoriesScreen extends StatefulWidget {
   State<AccessoriesScreen> createState() => _AccessoriesScreenState();
 }
 
-// ESTADO DA TELA: _AccessoriesScreenState
- // Gerencia todo o estado da tela de gestão de acessórios.
- // Controla formulário, dados, validações e interações do usuário.
+/// ESTADO DA TELA: _AccessoriesScreenState
+/// Gerencia todo o estado da tela de gestão de acessórios.
+/// Controla formulário, dados, validações e interações do usuário.
 
 class _AccessoriesScreenState extends State<AccessoriesScreen> {
   // === CONTROLADORES DE FORMULÁRIO ===
@@ -51,10 +51,10 @@ class _AccessoriesScreenState extends State<AccessoriesScreen> {
   // Flag indicando se o item é consumível
   bool _isConsumable = false;
 
-  // MÉTODO DO CICLO DE VIDA: dispose
-   
-   // Libera recursos dos controladores para evitar vazamentos de memória.
-   // Executado quando o widget é removido da árvore de widgets.
+  /// MÉTODO DO CICLO DE VIDA: dispose
+  /// 
+  /// Libera recursos dos controladores para evitar vazamentos de memória.
+  /// Executado quando o widget é removido da árvore de widgets.
   
   @override
   void dispose() {
@@ -65,17 +65,15 @@ class _AccessoriesScreenState extends State<AccessoriesScreen> {
     super.dispose();
   }
 
-  /*
-   * MÉTODO: _saveAccessory
-   * 
-   * Salva um novo acessório no Firestore após validação.
-   * Inclui tratamento de erros e feedback visual para o usuário.
-   * 
-   * VALIDAÇÕES:
-   * - Campos obrigatórios preenchidos
-   * - Formatos numéricos corretos
-   * - Valores positivos para quantidade e estoque
-   */
+  /// MÉTODO: _saveAccessory
+  /// 
+  /// Salva um novo acessório no Firestore após validação.
+  /// Inclui tratamento de erros e feedback visual para o usuário.
+  /// 
+  /// VALIDAÇÕES:
+  /// - Campos obrigatórios preenchidos
+  /// - Formatos numéricos corretos
+  /// - Valores positivos para quantidade e estoque
   Future<void> _saveAccessory() async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -115,16 +113,14 @@ class _AccessoriesScreenState extends State<AccessoriesScreen> {
     }
   }
 
-  /*
-   * MÉTODO: _updateQuantity
-   * 
-   * Atualiza a quantidade de um acessório no estoque.
-   * Permite incremento e decremento direto da quantidade.
-   * 
-   * PARÂMETROS:
-   * - accessoryId: ID do acessório a ser atualizado
-   * - newQuantity: Nova quantidade a ser definida
-   */
+  /// MÉTODO: _updateQuantity
+  /// 
+  /// Atualiza a quantidade de um acessório no estoque.
+  /// Permite incremento e decremento direto da quantidade.
+  /// 
+  /// PARÂMETROS:
+  /// - accessoryId: ID do acessório a ser atualizado
+  /// - newQuantity: Nova quantidade a ser definida
   Future<void> _updateQuantity(String accessoryId, int newQuantity) async {
     try {
       // Atualizar quantidade no Firestore
@@ -140,15 +136,13 @@ class _AccessoriesScreenState extends State<AccessoriesScreen> {
     }
   }
 
-  /*
-   * MÉTODO: _deleteAccessory
-   * 
-   * Exclui um acessório do sistema após confirmação.
-   * Remove permanentemente o documento do Firestore.
-   * 
-   * PARÂMETROS:
-   * - accessoryId: ID do acessório a ser excluído
-   */
+  /// MÉTODO: _deleteAccessory
+  /// 
+  /// Exclui um acessório do sistema após confirmação.
+  /// Remove permanentemente o documento do Firestore.
+  /// 
+  /// PARÂMETROS:
+  /// - accessoryId: ID do acessório a ser excluído
   Future<void> _deleteAccessory(String accessoryId) async {
     try {
       // Excluir documento do Firestore
@@ -169,18 +163,16 @@ class _AccessoriesScreenState extends State<AccessoriesScreen> {
     }
   }
 
-  /*
-   * MÉTODO: build
-   * 
-   * Constrói a interface principal da tela de acessórios.
-   * Layout com formulário lateral e lista principal de acessórios.
-   * 
-   * ESTRUTURA:
-   * - AppBar com título
-   * - Row com formulário lateral (350px) e lista expandida
-   * - StreamBuilder para dados em tempo real
-   * - Cards de acessórios com controles de quantidade
-   */
+  /// MÉTODO: build
+  /// 
+  /// Constrói a interface principal da tela de acessórios.
+  /// Layout com formulário lateral e lista principal de acessórios.
+  /// 
+  /// ESTRUTURA:
+  /// - AppBar com título
+  /// - Row com formulário lateral (350px) e lista expandida
+  /// - StreamBuilder para dados em tempo real
+  /// - Cards de acessórios com controles de quantidade
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,5 +1,5 @@
-// lib/widgets/emprestimo_form_dialog.dart
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stoquer/models/ativo.dart';
 import 'package:stoquer/models/emprestimo.dart';
 import 'package:stoquer/services/emprestimo_service.dart';
@@ -16,7 +16,7 @@ class _EmprestimoFormDialogState extends State<EmprestimoFormDialog> {
   final _formKey = GlobalKey<FormState>();
   final _emprestimoService = EmprestimoService();
   final _solicitanteController = TextEditingController();
-  DateTime? _dataDevolucao;
+  DateTime? _dataPrevistaDevolucao;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,9 @@ class _EmprestimoFormDialogState extends State<EmprestimoFormDialog> {
             ),
             const SizedBox(height: 16),
             ListTile(
-              title: Text(_dataDevolucao == null ? 'Data da Devolução' : 'Devolver em: ${_dataDevolucao!.day}/${_dataDevolucao!.month}/${_dataDevolucao!.year}'),
+              title: Text(_dataPrevistaDevolucao == null
+                  ? 'Data Prevista da Devolução'
+                  : 'Devolver em: ${DateFormat('dd/MM/yyyy').format(_dataPrevistaDevolucao!)}'),
               trailing: const Icon(Icons.calendar_today),
               onTap: () async {
                 final pickedDate = await showDatePicker(
@@ -44,7 +46,7 @@ class _EmprestimoFormDialogState extends State<EmprestimoFormDialog> {
                   lastDate: DateTime(2100),
                 );
                 if (pickedDate != null) {
-                  setState(() => _dataDevolucao = pickedDate);
+                  setState(() => _dataPrevistaDevolucao = pickedDate);
                 }
               },
             ),
@@ -55,20 +57,25 @@ class _EmprestimoFormDialogState extends State<EmprestimoFormDialog> {
         TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancelar')),
         FilledButton(
           onPressed: () async {
-            if (_formKey.currentState!.validate() && _dataDevolucao != null) {
+            if (_formKey.currentState!.validate() && _dataPrevistaDevolucao != null) {
+              
               final novoEmprestimo = Emprestimo(
-                id: '', // Firestore vai gerar
+                id: '', // Firestore vai gerar o ID
                 ativoId: widget.ativo.id,
                 ativoNome: widget.ativo.nome,
-                usuarioId: 'id_do_solicitante_aqui', // Você precisa implementar a busca de usuários
+                usuarioId: 'id_do_solicitante_aqui',
                 usuarioNome: _solicitanteController.text,
                 dataEmprestimo: DateTime.now(),
-                dataPrevistaDevolucao: _dataDevolucao!,
+                dataPrevistaDevolucao: _dataPrevistaDevolucao!,
                 status: 'ativo',
-                responsavelEmprestimo: 'id_do_admin_logado_aqui', // Pegar do Provider
+                responsavelEmprestimo: 'id_do_admin_logado_aqui',
               );
+
               await _emprestimoService.criarEmprestimo(novoEmprestimo);
-              if (mounted) Navigator.pop(context);
+              
+              // SOLUÇÃO: Verificação de segurança adicionada.
+              if (!mounted) return;
+              Navigator.pop(context);
             }
           },
           child: const Text('Confirmar'),
@@ -77,3 +84,5 @@ class _EmprestimoFormDialogState extends State<EmprestimoFormDialog> {
     );
   }
 }
+
+  

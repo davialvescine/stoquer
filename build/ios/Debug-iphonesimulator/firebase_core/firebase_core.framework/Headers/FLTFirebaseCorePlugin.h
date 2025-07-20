@@ -10,11 +10,7 @@
 #endif
 
 #import "FLTFirebasePlugin.h"
-#if __has_include("include/messages.g.h")
-#import "include/messages.g.h"
-#else
 #import "messages.g.h"
-#endif
 
 @interface FLTFirebaseCorePlugin
     : FLTFirebasePlugin <FlutterPlugin, FLTFirebasePlugin, FirebaseCoreHostApi, FirebaseAppHostApi>

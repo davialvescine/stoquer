@@ -109,20 +109,6 @@ typedef NS_ENUM(NSUInteger, AggregateSource) {
 - (instancetype)initWithValue:(AggregateSource)value;
 @end
 
-/// [PersistenceCacheIndexManagerRequest] represents the request types for the persistence cache
-/// index manager.
-typedef NS_ENUM(NSUInteger, PersistenceCacheIndexManagerRequest) {
-  PersistenceCacheIndexManagerRequestEnableIndexAutoCreation = 0,
-  PersistenceCacheIndexManagerRequestDisableIndexAutoCreation = 1,
-  PersistenceCacheIndexManagerRequestDeleteAllIndexes = 2,
-};
-
-/// Wrapper for PersistenceCacheIndexManagerRequest to allow for nullability.
-@interface PersistenceCacheIndexManagerRequestBox : NSObject
-@property(nonatomic, assign) PersistenceCacheIndexManagerRequest value;
-- (instancetype)initWithValue:(PersistenceCacheIndexManagerRequest)value;
-@end
-
 typedef NS_ENUM(NSUInteger, PigeonTransactionResult) {
   PigeonTransactionResultSuccess = 0,
   PigeonTransactionResultFailure = 1,
@@ -413,9 +399,6 @@ NSObject<FlutterMessageCodec> *FirebaseFirestoreHostApiGetCodec(void);
                               source:(ListenSource)source
                           completion:
                               (void (^)(NSString *_Nullable, FlutterError *_Nullable))completion;
-- (void)persistenceCacheIndexManagerRequestApp:(FirestorePigeonFirebaseApp *)app
-                                       request:(PersistenceCacheIndexManagerRequest)request
-                                    completion:(void (^)(FlutterError *_Nullable))completion;
 @end
 
 extern void FirebaseFirestoreHostApiSetup(id<FlutterBinaryMessenger> binaryMessenger,

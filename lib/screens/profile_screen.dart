@@ -40,10 +40,13 @@ class ProfileScreen extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.password, color: Colors.blue),
             title: const Text('Redefinir Senha'),
-            onTap: () {
-              authService.sendPasswordResetEmail(usuario.email);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('E-mail de redefinição enviado para ${usuario.email}')),
+            onTap: () async {
+              final scaffoldMessenger = ScaffoldMessenger.of(context);
+              final result = await authService.resetPassword(email: usuario.email);
+              scaffoldMessenger.showSnackBar(
+                SnackBar(content: Text(result == 'success' 
+                  ? 'E-mail de redefinição enviado para ${usuario.email}'
+                  : 'Erro: $result')),
               );
             },
           ),
